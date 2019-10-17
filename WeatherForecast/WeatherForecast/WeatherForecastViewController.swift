@@ -22,9 +22,24 @@ class WeatherForecastViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
   }
+  
+  private func parsedTemperature() -> [ForecastResult] {
+    do {
+      if let file = Bundle.main.url(forResource: "FiveDayWeather", withExtension: "json") {
+        let data = try Data(contentsOf: file)
+        
+        let decoder = JSONDecoder()
+        let jsonResult = try decoder.decode([ForecastResult].self, from: data)
+        
+        return jsonResult
+      }
+    } catch {
+      print(error.localizedDescription)
+    }
+    return [ForecastResult]()
+  }
 }
 
 extension WeatherForecastViewController: WeatherViewDelegate {
-  
 }
 

@@ -49,7 +49,7 @@ class WeatherForecastView: UIView {
       let humidity = UILabel()
       humidity.font = UIFont.systemFont(ofSize: 14)
       humidity.numberOfLines = 2
-      humidity.text = "Humidity /n"
+      humidity.text = "Humidity/n30"
       humidity.textColor = .white
       humidity.textAlignment = .center
       humidity.translatesAutoresizingMaskIntoConstraints = false
@@ -87,9 +87,9 @@ class WeatherForecastView: UIView {
     func setupUI() {
       self.backgroundColor = UIColor(red: 11/255, green: 57/255, blue: 32/255, alpha: 1)
       
-      let weatherDetailsStackView = UIStackView(arrangedSubviews: [humidityLabel, pressureLabel, windlabel])
-      weatherDetailsStackView.translatesAutoresizingMaskIntoConstraints = false
-      weatherDetailsStackView.distribution = .fillProportionally
+//      let weatherDetailsStackView = UIStackView(arrangedSubviews: [humidityLabel, pressureLabel, windlabel])
+//      weatherDetailsStackView.translatesAutoresizingMaskIntoConstraints = false
+//      weatherDetailsStackView.distribution = .fillProportionally
       
       addSubview(cityNameLabel)
       addSubview(currentTemperatureLabel)
@@ -97,20 +97,31 @@ class WeatherForecastView: UIView {
       addSubview(pressureLabel)
       addSubview(windlabel)
   //    addSubview(weatherForFiveDaysCollectionView)
-      addSubview(weatherDetailsStackView)
+//      addSubview(weatherDetailsStackView)
       
       NSLayoutConstraint.activate([
-        cityNameLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 30),
+        cityNameLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 80),
         cityNameLabel.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
         cityNameLabel.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
         
-        currentTemperatureLabel.topAnchor.constraint(equalTo: cityNameLabel.bottomAnchor, constant: 30),
+        currentTemperatureLabel.topAnchor.constraint(equalTo: cityNameLabel.bottomAnchor, constant: 60),
         currentTemperatureLabel.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
         currentTemperatureLabel.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
         
-        weatherDetailsStackView.topAnchor.constraint(equalTo: currentTemperatureLabel.bottomAnchor, constant: 30),
-        weatherDetailsStackView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
-        weatherDetailsStackView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
+        humidityLabel.topAnchor.constraint(equalTo: currentTemperatureLabel.bottomAnchor, constant: 60),
+        humidityLabel.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 15),
+//        humidityLabel.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
+        
+        pressureLabel.topAnchor.constraint(equalTo: currentTemperatureLabel.bottomAnchor, constant: 60),
+        pressureLabel.leadingAnchor.constraint(equalTo: humidityLabel.trailingAnchor, constant: 30),
+//        pressureLabel.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
+        
+        windlabel.topAnchor.constraint(equalTo: currentTemperatureLabel.bottomAnchor, constant: 60),
+        windlabel.leadingAnchor.constraint(equalTo: pressureLabel.trailingAnchor, constant: 5),
+        windlabel.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor)
+//        weatherDetailsStackView.topAnchor.constraint(equalTo: currentTemperatureLabel.bottomAnchor, constant: 30),
+//        weatherDetailsStackView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
+//        weatherDetailsStackView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
         
   //      weatherForFiveDaysCollectionView.topAnchor.constraint(equalTo: weatherDetailsStackView.bottomAnchor, constant: 50),
   //      weatherForFiveDaysCollectionView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),

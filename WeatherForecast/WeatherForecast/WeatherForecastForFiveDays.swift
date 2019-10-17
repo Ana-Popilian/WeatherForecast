@@ -8,18 +8,30 @@
 
 import Foundation
 
-struct ForecastResult {
+struct ForecastResult: Codable {
   var dayTime: String
-  var temperature: Main
+  var main: Main
   var wind: Wind
+  
+  private enum CodingKeys: String, CodingKey {
+  case dayTime = "dt"
+  case wind = "speed"
+  case main 
+  }
 }
 
-struct Main {
+struct Main: Codable {
   var temperature: Int
   var pressure: Int
   var humidity: Int
+  
+  private enum CodingKeys: String, CodingKey {
+    case temperature = "temp"
+    case pressure
+    case humidity
+  }
 }
 
-struct Wind {
+struct Wind: Codable {
   var speed: Int
 }
