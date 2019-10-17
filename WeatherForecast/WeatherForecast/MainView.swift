@@ -50,7 +50,7 @@ class MainView: UIView {
   private let tableView: UITableView = {
     let tableView = UITableView()
     tableView.register(CityCell.self, forCellReuseIdentifier: "cellId")
-    tableView.translatesAutoresizingMaskIntoConstraints = false
+ tableView.translatesAutoresizingMaskIntoConstraints = false
     return tableView
   }()
   

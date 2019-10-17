@@ -12,11 +12,14 @@ class WeatherForecastViewController: UIViewController {
   
   var weatherView: WeatherForecastView!
   
+  var forecastResult: ForecastResult!
+  
   override func loadView() {
     weatherView = WeatherForecastView()
     weatherView.delegate = self
-    
     view = weatherView
+    
+//    weatherView.bindView(forecast: forecastResult)
   }
   
   override func viewDidLoad() {
@@ -36,6 +39,7 @@ class WeatherForecastViewController: UIViewController {
     } catch {
       print(error.localizedDescription)
     }
+       print("I did it")
     return [ForecastResult]()
   }
 }

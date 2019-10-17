@@ -16,7 +16,7 @@ struct ForecastResult: Codable {
   private enum CodingKeys: String, CodingKey {
   case dayTime = "dt"
   case wind = "speed"
-  case main 
+  case main
   }
 }
 

@@ -87,9 +87,6 @@ class WeatherForecastView: UIView {
     func setupUI() {
       self.backgroundColor = UIColor(red: 11/255, green: 57/255, blue: 32/255, alpha: 1)
       
-//      let weatherDetailsStackView = UIStackView(arrangedSubviews: [humidityLabel, pressureLabel, windlabel])
-//      weatherDetailsStackView.translatesAutoresizingMaskIntoConstraints = false
-//      weatherDetailsStackView.distribution = .fillProportionally
       
       addSubview(cityNameLabel)
       addSubview(currentTemperatureLabel)
@@ -97,7 +94,7 @@ class WeatherForecastView: UIView {
       addSubview(pressureLabel)
       addSubview(windlabel)
   //    addSubview(weatherForFiveDaysCollectionView)
-//      addSubview(weatherDetailsStackView)
+
       
       NSLayoutConstraint.activate([
         cityNameLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 80),
@@ -119,15 +116,15 @@ class WeatherForecastView: UIView {
         windlabel.topAnchor.constraint(equalTo: currentTemperatureLabel.bottomAnchor, constant: 60),
         windlabel.leadingAnchor.constraint(equalTo: pressureLabel.trailingAnchor, constant: 5),
         windlabel.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor)
-//        weatherDetailsStackView.topAnchor.constraint(equalTo: currentTemperatureLabel.bottomAnchor, constant: 30),
-//        weatherDetailsStackView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
-//        weatherDetailsStackView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
-        
-  //      weatherForFiveDaysCollectionView.topAnchor.constraint(equalTo: weatherDetailsStackView.bottomAnchor, constant: 50),
-  //      weatherForFiveDaysCollectionView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
-  //      weatherForFiveDaysCollectionView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
-  //      weatherForFiveDaysCollectionView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
+
       ])
     }
+  
+  func bindView(forecast: ForecastResult) -> Void {
+    currentTemperatureLabel.text = String(forecast.main.temperature)
+    humidityLabel.text = String(forecast.main.humidity)
+    pressureLabel.text = String(forecast.main.pressure)
+    
+  }
   }
 
