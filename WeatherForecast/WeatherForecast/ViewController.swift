@@ -46,6 +46,10 @@ class ViewController: UIViewController {
 
 extension ViewController: MainViewDelegate {
   func didSelectedCity(_ city: City) {
+    //TO DO: Implement transition to second screen
+    let nextViewController = WeatherForecastViewController()
+   let navController = UINavigationController(rootViewController: nextViewController)
+    self.present(navController, animated: true)
     print("should show the new screen")
   }
 }

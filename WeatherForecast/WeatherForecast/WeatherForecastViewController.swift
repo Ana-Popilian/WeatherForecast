@@ -10,6 +10,7 @@ import UIKit
 
 class WeatherForecastViewController: UIViewController {
   
+  let gorkaId = 1283378
   var weatherView: WeatherForecastView!
   
   var forecastResult: ForecastResult!
@@ -19,11 +20,12 @@ class WeatherForecastViewController: UIViewController {
     weatherView.delegate = self
     view = weatherView
     
-//    weatherView.bindView(forecast: forecastResult)
+  //  weatherView.bindView(forecast: forecastResult)
   }
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    parsedTemperature()
   }
   
   private func parsedTemperature() -> [ForecastResult] {

@@ -121,6 +121,7 @@ class WeatherForecastView: UIView {
     }
   
   func bindView(forecast: ForecastResult) -> Void {
+//    cityNameLabel.text = String(forecast.city.cityId)
     currentTemperatureLabel.text = String(forecast.main.temperature)
     humidityLabel.text = String(forecast.main.humidity)
     pressureLabel.text = String(forecast.main.pressure)
