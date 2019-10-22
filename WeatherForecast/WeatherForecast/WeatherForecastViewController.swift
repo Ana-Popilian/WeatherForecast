@@ -13,6 +13,8 @@ class WeatherForecastViewController: UIViewController {
   let gorkaId = 1283378
   var weatherView: WeatherForecastView!
   
+  var weatherResults = [ForecastResult]()
+  
   var forecastResult: ForecastResult!
   
   override func loadView() {
@@ -20,12 +22,15 @@ class WeatherForecastViewController: UIViewController {
     weatherView.delegate = self
     view = weatherView
     
-  //  weatherView.bindView(forecast: forecastResult)
+//    weatherView.bindView(forecast: forecastResult)
   }
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    parsedTemperature()
+    
+    let weatherParsed = parsedTemperature()
+    weatherView.bindView(forecast: weatherParsed)
+//    parsedTemperature()
   }
   
   private func parsedTemperature() -> [ForecastResult] {
@@ -34,14 +39,14 @@ class WeatherForecastViewController: UIViewController {
         let data = try Data(contentsOf: file)
         
         let decoder = JSONDecoder()
-        let jsonResult = try decoder.decode([ForecastResult].self, from: data)
+        let jsonResult = try decoder.decode(ForecastResult.self, from: data)
+        print(jsonResult)
+        return [jsonResult]
         
-        return jsonResult
       }
     } catch {
       print(error.localizedDescription)
     }
-       print("I did it")
     return [ForecastResult]()
   }
 }

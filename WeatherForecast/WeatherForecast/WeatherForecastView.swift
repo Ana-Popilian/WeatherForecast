@@ -95,7 +95,6 @@ class WeatherForecastView: UIView {
       addSubview(windlabel)
   //    addSubview(weatherForFiveDaysCollectionView)
 
-      
       NSLayoutConstraint.activate([
         cityNameLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 80),
         cityNameLabel.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
@@ -120,11 +119,11 @@ class WeatherForecastView: UIView {
       ])
     }
   
-  func bindView(forecast: ForecastResult) -> Void {
-//    cityNameLabel.text = String(forecast.city.cityId)
-    currentTemperatureLabel.text = String(forecast.main.temperature)
-    humidityLabel.text = String(forecast.main.humidity)
-    pressureLabel.text = String(forecast.main.pressure)
+  func bindView(forecast: [ForecastResult]) -> Void {
+    cityNameLabel.text = String(forecast.count)
+//    currentTemperatureLabel.text = String(forecast.list.self)
+//    humidityLabel.text = String(forecast.main.humidity)
+//    pressureLabel.text = String(forecast.main.pressure)
     
   }
   }

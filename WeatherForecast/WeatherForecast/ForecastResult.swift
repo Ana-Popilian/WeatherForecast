@@ -8,12 +8,13 @@
 
 import Foundation
 
-//struct ForecastResult: Decodable {
-////  var list: []
-//  var city: CityName
+struct ForecastResult: Decodable {
+  var list: [List]
+  var city: CityId
+}
 
-struct ForecastResult: Codable {
-  var dayTime: String
+struct List: Decodable {
+  var dayTime: Int
   var main: Main
   var wind: Wind
   }
@@ -24,16 +25,14 @@ struct ForecastResult: Codable {
   case main
   }
 
-
-struct Main: Codable {
+struct Main: Decodable {
   var temperature: Int
   var pressure: Int
   var humidity: Int
   
   private enum CodingKeys: String, CodingKey {
     case temperature = "temp"
-    case pressure
-    case humidity
+    case pressure, humidity
   }
 }
 
@@ -41,12 +40,6 @@ struct Wind: Codable {
   var speed: Int
 }
 
-struct CityName: Codable {
- var cityId: Int
-  var name: String
-  
-  private enum CodingKeys: String, CodingKey {
-    case cityId = "id"
-    case name 
-  }
+struct CityId: Decodable {
+  var id: Int
 }
