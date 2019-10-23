@@ -9,37 +9,42 @@
 import Foundation
 
 struct ForecastResult: Decodable {
-  var list: [List]
-  var city: CityId
-}
-
-struct List: Decodable {
-  var dayTime: Int
-  var main: Main
-  var wind: Wind
-  }
+  let hourForcasts: [HourForcast]
+  let city: City
   
   private enum CodingKeys: String, CodingKey {
-  case dayTime = "dt"
-  case wind = "speed"
-  case main
+    case hourForcasts = "list"
+    case city
   }
+  
+  struct City: Decodable {
+    var name: String
+  }
+}
 
-struct Main: Decodable {
-  var temperature: Int
-  var pressure: Int
-  var humidity: Int
+struct HourForcast: Decodable {
+  let formattedDate: String
+  let details: Details
+  let wind: Wind
   
   private enum CodingKeys: String, CodingKey {
-    case temperature = "temp"
-    case pressure, humidity
+    case formattedDate = "dt_txt"
+    case details = "main"
+    case wind
   }
-}
-
-struct Wind: Codable {
-  var speed: Int
-}
-
-struct CityId: Decodable {
-  var id: Int
+  
+  struct Details: Decodable {
+    let temperature: Double
+    let pressure: Double
+    let humidity: Double
+    
+    private enum CodingKeys: String, CodingKey {
+      case temperature = "temp"
+      case pressure, humidity
+    }
+  }
+  
+  struct Wind: Codable {
+    let speed: Double
+  }
 }
