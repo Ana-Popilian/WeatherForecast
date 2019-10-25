@@ -15,7 +15,6 @@ protocol MainViewDelegate : class {
 
 class MainView: UIView {
   
-  
   private let cellId = "cellId"
   weak var delegate : MainViewDelegate?
   
@@ -50,7 +49,7 @@ class MainView: UIView {
   private let tableView: UITableView = {
     let tableView = UITableView()
     tableView.register(CityCell.self, forCellReuseIdentifier: "cellId")
- tableView.translatesAutoresizingMaskIntoConstraints = false
+    tableView.translatesAutoresizingMaskIntoConstraints = false
     return tableView
   }()
   
@@ -103,16 +102,15 @@ class MainView: UIView {
     }
     return filteredArray
   }
-   
+  
   func showLocationOnMapByRow(_ row: Int) {
     let selectedCity = filteredCities[row]
-       let location = CLLocationCoordinate2D(latitude: selectedCity.coord.lat, longitude: selectedCity.coord.lon)
-       
-       let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
-       let region = MKCoordinateRegion(center: location, span: span)
-       mapView.setRegion(region, animated: true)
+    let location = CLLocationCoordinate2D(latitude: selectedCity.coord.lat, longitude: selectedCity.coord.lon)
+    
+    let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
+    let region = MKCoordinateRegion(center: location, span: span)
+    mapView.setRegion(region, animated: true)
   }
-  
 }
 
 extension MainView: UITableViewDataSource {
@@ -137,20 +135,18 @@ extension MainView: UITableViewDataSource {
     
     return cell!
   }
-  
 }
 
 extension MainView: UITableViewDelegate {
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-   
+    
     searchBar.resignFirstResponder()
     showLocationOnMapByRow(indexPath.row)
     
     let selectedCity = filteredCities[indexPath.row]
     
     delegate?.didSelectedCity(selectedCity)
-   
   }
 }
 

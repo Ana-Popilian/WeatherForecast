@@ -28,7 +28,6 @@ final class VisualDescriptiveView: UIView {
   }
 }
 
-
 private extension VisualDescriptiveView {
   
   func setupImageView(_ image: UIImage) {

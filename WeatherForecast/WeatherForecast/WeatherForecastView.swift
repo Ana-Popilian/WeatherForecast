@@ -9,11 +9,13 @@
 import UIKit
 
 protocol WeatherViewDelegate where Self: UIViewController {
+  
 }
 
 class WeatherForecastView: UIView {
   
   weak var delegate: WeatherViewDelegate?
+  let weatherData = [HourForcast]()
   
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -66,25 +68,26 @@ class WeatherForecastView: UIView {
     return view
   }()
   
-  
-  private let weatherForFiveDaysCollectionView: UICollectionViewFlowLayout = {
-    let collectionView = UICollectionViewFlowLayout()
-    collectionView.scrollDirection = .horizontal
+  private let weatherForFiveDaysCollectionView: UICollectionView = {
+    let layout = UICollectionViewFlowLayout()
+    layout.scrollDirection = .horizontal
+    let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+    collectionView.translatesAutoresizingMaskIntoConstraints = false
+    collectionView.register(WeatherForecastForFiveDaysCell.self, forCellWithReuseIdentifier: WeatherForecastForFiveDaysCell.identifier)
+    collectionView.backgroundColor = .white
     return collectionView
   }()
   
-  
   func setupUI() {
     self.backgroundColor = UIColor(red: 11/255, green: 57/255, blue: 32/255, alpha: 1)
-    
+    weatherForFiveDaysCollectionView.dataSource = self
     
     addSubview(cityNameLabel)
     addSubview(currentTemperatureLabel)
     addSubview(humidityView)
     addSubview(pressureView)
     addSubview(windView)
-    
-    //    addSubview(weatherForFiveDaysCollectionView)
+    addSubview(weatherForFiveDaysCollectionView)
     
     NSLayoutConstraint.activate([
       cityNameLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 70),
@@ -107,6 +110,10 @@ class WeatherForecastView: UIView {
       windView.leadingAnchor.constraint(equalTo: pressureView.trailingAnchor, constant: 20),
       windView.widthAnchor.constraint(equalTo: pressureView.widthAnchor),
       
+      weatherForFiveDaysCollectionView.topAnchor.constraint(equalTo: pressureView.bottomAnchor, constant: 25),
+      weatherForFiveDaysCollectionView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 5),
+      weatherForFiveDaysCollectionView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -5),
+      weatherForFiveDaysCollectionView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
     ])
   }
   
@@ -115,24 +122,51 @@ class WeatherForecastView: UIView {
     
     cityNameLabel.text = String(forecastResult.city.name)
     
-    
-         let celsiusTemperature = convertFahrenheitToCelsius(tempInFahrenheit: Double(temp))
-        currentTemperatureLabel.text = "\(celsiusTemperature)℃"
-   
-    
-    humidityView.updateTitle("Humidity\n\(forecastResult.hourForcasts.first!.details.humidity)")
+    let celsiusTemperature = convertFahrenheitToCelsius(tempInFahrenheit: Double(temp))
+    currentTemperatureLabel.text = "\(celsiusTemperature)℃"
+    humidityView.updateTitle("Humidity\n\(forecastResult.hourForcasts.first!.details.humidity)%")
     pressureView.updateTitle("Pressure\n\(forecastResult.hourForcasts.first!.details.pressure)")
-    windView.updateTitle("Wind\n\(forecastResult.hourForcasts.first!.wind.speed)")
+    windView.updateTitle("Wind\n\(forecastResult.hourForcasts.first!.wind.speed)km/h")
+    
     
     //    humidityView.text = "Humidity\n\(forecastResult.hourForcasts.first!.details.humidity)"
     //    pressureLabel.text = "Pressure \n\(forecastResult.hourForcasts.first!.details.pressure)"
     //    windlabel.text = "Wind\n\(forecastResult.hourForcasts.first!.wind.speed)"
-      }
-    
-    func convertFahrenheitToCelsius(tempInFahrenheit: Double) -> Int {
-      let celsius = (tempInFahrenheit - 32) * (5/9)
-      return Int(celsius)
-    }
   }
   
+  func convertFahrenheitToCelsius(tempInFahrenheit: Double) -> Int {
+    let celsius = (tempInFahrenheit - 32) * (5/9)
+    return Int(celsius)
+  }
+}
 
+extension WeatherForecastView: UICollectionViewDataSource {
+  
+  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    return 15
+    //        return weatherData.count
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WeatherForecastForFiveDaysCell.identifier, for: indexPath) as! WeatherForecastForFiveDaysCell
+    cell.backgroundColor = .green
+    return cell
+  }
+  
+  //  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+  //    return CGSize(width: collectionView.frame.width/2.5, height: collectionView.frame.width/2)
+  //  }
+}
+
+
+protocol Identifiable {
+  
+  static var identifier: String { get }
+}
+
+extension Identifiable {
+  
+  static var identifier: String {
+    return String(describing: self)
+  }
+}
