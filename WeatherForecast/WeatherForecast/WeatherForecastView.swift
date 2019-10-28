@@ -17,10 +17,23 @@ class WeatherForecastView: UIView {
   weak var delegate: WeatherViewDelegate?
   let weatherData = [HourForcast]()
   
+  let networkManager = NetworkManager()
+  
   override init(frame: CGRect) {
     super.init(frame: frame)
     self.backgroundColor = .white
     setupUI()
+    
+    //        networkManager.getWeatherData{ [weak self] (forecastResult) in
+    //            guard let forecastResult = forecastResult else { return }
+    //            guard let self = self else { return }
+    //
+    //            print(forecastResult)
+    //
+    //            DispatchQueue.main.async {
+    //                 self.setupUI()
+    //            }
+    //        }
   }
   
   required init?(coder aDecoder: NSCoder) {
@@ -127,11 +140,6 @@ class WeatherForecastView: UIView {
     humidityView.updateTitle("Humidity\n\(forecastResult.hourForcasts.first!.details.humidity)%")
     pressureView.updateTitle("Pressure\n\(forecastResult.hourForcasts.first!.details.pressure)")
     windView.updateTitle("Wind\n\(forecastResult.hourForcasts.first!.wind.speed)km/h")
-    
-    
-    //    humidityView.text = "Humidity\n\(forecastResult.hourForcasts.first!.details.humidity)"
-    //    pressureLabel.text = "Pressure \n\(forecastResult.hourForcasts.first!.details.pressure)"
-    //    windlabel.text = "Wind\n\(forecastResult.hourForcasts.first!.wind.speed)"
   }
   
   func convertFahrenheitToCelsius(tempInFahrenheit: Double) -> Int {
@@ -143,8 +151,8 @@ class WeatherForecastView: UIView {
 extension WeatherForecastView: UICollectionViewDataSource {
   
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return 15
-    //        return weatherData.count
+    return 40
+    //            return weatherData.count
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -152,10 +160,6 @@ extension WeatherForecastView: UICollectionViewDataSource {
     cell.backgroundColor = .green
     return cell
   }
-  
-  //  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-  //    return CGSize(width: collectionView.frame.width/2.5, height: collectionView.frame.width/2)
-  //  }
 }
 
 
