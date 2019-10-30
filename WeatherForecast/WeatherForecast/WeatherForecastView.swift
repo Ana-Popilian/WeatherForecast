@@ -15,25 +15,26 @@ protocol WeatherViewDelegate where Self: UIViewController {
 class WeatherForecastView: UIView {
   
   weak var delegate: WeatherViewDelegate?
-  let weatherData = [HourForcast]()
-  
+    
+  var forecastData = [ForecastResult]()
   let networkManager = NetworkManager()
   
   override init(frame: CGRect) {
     super.init(frame: frame)
     self.backgroundColor = .white
-    setupUI()
+        setupUI()
     
-    //        networkManager.getWeatherData{ [weak self] (forecastResult) in
-    //            guard let forecastResult = forecastResult else { return }
-    //            guard let self = self else { return }
-    //
-    //            print(forecastResult)
-    //
-    //            DispatchQueue.main.async {
-    //                 self.setupUI()
-    //            }
-    //        }
+//    networkManager.getWeatherData{ [weak self] (forecastResult) in
+//      guard let self = self else { return }
+//      guard let unwrappedResult = forecastResult else { return }
+//      self.forecastData = [unwrappedResult]
+//      
+//      //                print(forecastResult)
+//      
+//      DispatchQueue.main.async {
+//        self.weatherForFiveDaysCollectionView.reloadData()
+//      }
+//    }
   }
   
   required init?(coder aDecoder: NSCoder) {
@@ -151,8 +152,8 @@ class WeatherForecastView: UIView {
 extension WeatherForecastView: UICollectionViewDataSource {
   
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return 40
-    //            return weatherData.count
+//    return 40
+    return (forecastData.first?.hourForcasts.count) ?? 7
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

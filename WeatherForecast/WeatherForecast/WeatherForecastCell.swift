@@ -11,6 +11,12 @@ import UIKit
 
 class WeatherForecastForFiveDaysCell: UICollectionViewCell, Identifiable {
   
+//  var data: WeatherForecastForFiveDaysCell? {
+//    didSet {
+//      guard let data = data else {return}
+//      dateLabel.text = data.dateLabel
+//    }
+//  }
   override init(frame: CGRect) {
     super.init(frame: frame)
     setupLayoutForCell()
