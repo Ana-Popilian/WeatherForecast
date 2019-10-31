@@ -15,26 +15,23 @@ protocol WeatherViewDelegate where Self: UIViewController {
 class WeatherForecastView: UIView {
   
   weak var delegate: WeatherViewDelegate?
-    
-  var forecastData = [ForecastResult]()
+  
+  var forecastData: ForecastResult?
+  {
+    didSet {
+      DispatchQueue.main.async {
+        self.weatherForFiveDaysCollectionView.reloadData()
+        self.updateUI(forecastResult: self.forecastData!)
+      }
+    }
+  }
+  
   let networkManager = NetworkManager()
   
   override init(frame: CGRect) {
     super.init(frame: frame)
     self.backgroundColor = .white
-        setupUI()
-    
-//    networkManager.getWeatherData{ [weak self] (forecastResult) in
-//      guard let self = self else { return }
-//      guard let unwrappedResult = forecastResult else { return }
-//      self.forecastData = [unwrappedResult]
-//      
-//      //                print(forecastResult)
-//      
-//      DispatchQueue.main.async {
-//        self.weatherForFiveDaysCollectionView.reloadData()
-//      }
-//    }
+    setupUI()
   }
   
   required init?(coder aDecoder: NSCoder) {
@@ -83,7 +80,7 @@ class WeatherForecastView: UIView {
   }()
   
   private let weatherForFiveDaysCollectionView: UICollectionView = {
-    let layout = UICollectionViewFlowLayout()
+    let layout = HourForecastViewLayout()
     layout.scrollDirection = .horizontal
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
     collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -131,7 +128,8 @@ class WeatherForecastView: UIView {
     ])
   }
   
-  func bindView(forecastResult: ForecastResult) -> Void {
+  private func updateUI(forecastResult: ForecastResult) {
+    
     let temp = Int(forecastResult.hourForcasts.first!.details.temperature)
     
     cityNameLabel.text = String(forecastResult.city.name)
@@ -152,13 +150,20 @@ class WeatherForecastView: UIView {
 extension WeatherForecastView: UICollectionViewDataSource {
   
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//    return 40
-    return (forecastData.first?.hourForcasts.count) ?? 7
+    
+    guard let forecastData = forecastData else {
+      return 0
+    }
+    
+    return forecastData.hourForcasts.count
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WeatherForecastForFiveDaysCell.identifier, for: indexPath) as! WeatherForecastForFiveDaysCell
-    cell.backgroundColor = .green
+    let currentHourForecast = forecastData!.hourForcasts[indexPath.row]
+    
+    cell.bindData(currentHourForecast)
+  
     return cell
   }
 }

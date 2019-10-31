@@ -10,15 +10,12 @@ import UIKit
 
 class WeatherForecastViewController: UIViewController {
   
-  var weatherView: WeatherForecastView!
-  
-  var forecastResult: ForecastResult!
-   var forecastData = [ForecastResult]()
+  var mainView: WeatherForecastView!
   
   override func loadView() {
-    weatherView = WeatherForecastView()
-    weatherView.delegate = self
-    view = weatherView
+    mainView = WeatherForecastView()
+    mainView.delegate = self
+    view = mainView
   }
   
   override func viewDidLoad() {
@@ -27,20 +24,17 @@ class WeatherForecastViewController: UIViewController {
     //    let forecastResult = parsedTemperature()
     //    if let result = forecastResult {
     //      weatherView.bindView(forecastResult: result)
+    
+    
     let network = NetworkManager()
-    network.getWeatherData{ [weak self] (forecastResult) in
-      guard let unwrappedResult = forecastResult else { return }
+    network.getWeatherData(completionHandler: { [weak self] (forecastResult) in
       guard let self = self else { return }
-      self.forecastData = [unwrappedResult]
       
-      //                print(forecastResult)
-      
-      DispatchQueue.main.async {
-//        view.weatherForFiveDaysCollectionView.reloadData()
-      }
-    }
+      self.mainView.forecastData = forecastResult
+    })
   }
-  
+  //let ss = ViewController()
+
 //
 //  private func parsedTemperature() -> ForecastResult? {
 //    do {
@@ -71,8 +65,8 @@ class WeatherForecastViewController: UIViewController {
 //    }
 //    return nil
 //  }
+  
 }
-
 extension WeatherForecastViewController: WeatherViewDelegate {
 }
 
