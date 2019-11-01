@@ -105,11 +105,11 @@ class WeatherForecastView: UIView {
       cityNameLabel.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
       cityNameLabel.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
       
-      currentTemperatureLabel.topAnchor.constraint(equalTo: cityNameLabel.bottomAnchor, constant: 60),
+      currentTemperatureLabel.topAnchor.constraint(equalTo: cityNameLabel.bottomAnchor, constant: 70),
       currentTemperatureLabel.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
       currentTemperatureLabel.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
       
-      pressureView.topAnchor.constraint(equalTo: currentTemperatureLabel.bottomAnchor, constant: 60),
+      pressureView.topAnchor.constraint(equalTo: currentTemperatureLabel.bottomAnchor, constant: 50),
       pressureView.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor),
       pressureView.widthAnchor.constraint(equalToConstant: 60),
       
@@ -121,7 +121,7 @@ class WeatherForecastView: UIView {
       windView.leadingAnchor.constraint(equalTo: pressureView.trailingAnchor, constant: 20),
       windView.widthAnchor.constraint(equalTo: pressureView.widthAnchor),
       
-      weatherForFiveDaysCollectionView.topAnchor.constraint(equalTo: pressureView.bottomAnchor, constant: 25),
+      weatherForFiveDaysCollectionView.topAnchor.constraint(equalTo: pressureView.bottomAnchor, constant: 15),
       weatherForFiveDaysCollectionView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 5),
       weatherForFiveDaysCollectionView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -5),
       weatherForFiveDaysCollectionView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)

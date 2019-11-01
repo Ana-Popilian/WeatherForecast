@@ -11,15 +11,10 @@ import UIKit
 
 class WeatherForecastForFiveDaysCell: UICollectionViewCell, Identifiable {
   
-  //  var data: WeatherForecastForFiveDaysCell? {
-  //    didSet {
-  //      guard let data = data else {return}
-  //      dateLabel.text = data.dateLabel
-  //    }
-  //  }
+  
   override init(frame: CGRect) {
     super.init(frame: frame)
-    self.backgroundColor = .green
+    self.backgroundColor = UIColor(red: 11/255, green: 57/255, blue: 32/255, alpha: 1)
     setupLayoutForCell()
   }
   
@@ -37,7 +32,6 @@ class WeatherForecastForFiveDaysCell: UICollectionViewCell, Identifiable {
     label.textColor = .white
     label.font = UIFont.boldSystemFont(ofSize: 13)
     label.translatesAutoresizingMaskIntoConstraints = false
-    label.backgroundColor = .green
     return label
   }()
   
@@ -47,7 +41,6 @@ class WeatherForecastForFiveDaysCell: UICollectionViewCell, Identifiable {
     label.font = UIFont.systemFont(ofSize: 13)
     label.textAlignment = .center
     label.translatesAutoresizingMaskIntoConstraints = false
-    label.backgroundColor = .green
     return label
   }()
   
@@ -59,7 +52,7 @@ class WeatherForecastForFiveDaysCell: UICollectionViewCell, Identifiable {
     NSLayoutConstraint.activate([
       
       dateLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
-     // dateLabel.topAnchor.constraint(equalTo: topAnchor, constant: 5),
+      // dateLabel.topAnchor.constraint(equalTo: topAnchor, constant: 5),
       dateLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
       dateLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
       
