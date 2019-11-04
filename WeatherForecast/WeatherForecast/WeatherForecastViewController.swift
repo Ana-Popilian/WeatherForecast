@@ -21,11 +21,6 @@ class WeatherForecastViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    //    let forecastResult = parsedTemperature()
-    //    if let result = forecastResult {
-    //      weatherView.bindView(forecastResult: result)
-    
-    
     let network = NetworkManager()
     network.getWeatherData(completionHandler: { [weak self] (forecastResult) in
       guard let self = self else { return }
@@ -33,9 +28,8 @@ class WeatherForecastViewController: UIViewController {
       self.mainView.forecastData = forecastResult
     })
   }
-  //let ss = ViewController()
+ 
 
-//
 //  private func parsedTemperature() -> ForecastResult? {
 //    do {
 //      if let file = Bundle.main.url(forResource: "FiveDayWeather", withExtension: "json") {

@@ -23,8 +23,17 @@ class WeatherForecastForFiveDaysCell: UICollectionViewCell, Identifiable {
   }
   
   func bindData(_ hourForecast: HourForcast) {
+    
+    let temp = Int(hourForecast.details.temperature)
+    let celsiusTemperature = convertFahrenheitToCelsius(tempInFahrenheit: Double(temp))
+    temperatureLabel.text = "\(celsiusTemperature)℃"
+    
     dateLabel.text = hourForecast.formattedDate
-    temperatureLabel.text = "\(hourForecast.details.temperature) ℃"
+  }
+  
+  func convertFahrenheitToCelsius(tempInFahrenheit: Double) -> Int {
+    let celsius = (tempInFahrenheit - 32) * (5/9)
+    return Int(celsius)
   }
   
   private let dateLabel: UILabel = {
@@ -52,14 +61,12 @@ class WeatherForecastForFiveDaysCell: UICollectionViewCell, Identifiable {
     NSLayoutConstraint.activate([
       
       dateLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
-      // dateLabel.topAnchor.constraint(equalTo: topAnchor, constant: 5),
       dateLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
       dateLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
       
       temperatureLabel.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: 10),
       temperatureLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
       temperatureLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
-      //temperatureLabel.bottomAnchor.constraint(equalTo: bottomAnchor)
     ])
   }
 }
