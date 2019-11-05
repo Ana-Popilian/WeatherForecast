@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             window = UIWindow(frame: UIScreen.main.bounds)
 //            let mainVC = ViewController()
     
-            let nextViewController = WeatherForecastViewController()
+            let nextViewController = ViewController()
              let mainVC = UINavigationController(rootViewController: nextViewController)
     window?.rootViewController = mainVC
             window?.makeKeyAndVisible()

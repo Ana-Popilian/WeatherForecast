@@ -9,7 +9,6 @@
 import UIKit
 
 protocol WeatherViewDelegate where Self: UIViewController {
-  
 }
 
 class WeatherForecastView: UIView {
@@ -163,11 +162,10 @@ extension WeatherForecastView: UICollectionViewDataSource {
     let currentHourForecast = forecastData!.hourForcasts[indexPath.row]
     
     cell.bindData(currentHourForecast)
-  
+    
     return cell
   }
 }
-
 
 protocol Identifiable {
   

@@ -11,6 +11,7 @@ import UIKit
 class WeatherForecastViewController: UIViewController {
   
   var mainView: WeatherForecastView!
+  var cityID: String!
   
   override func loadView() {
     mainView = WeatherForecastView()
@@ -21,44 +22,20 @@ class WeatherForecastViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    
     let network = NetworkManager()
-    network.getWeatherData(completionHandler: { [weak self] (forecastResult) in
+    network.getWeatherData(cityId: cityID, completionHandler: { [weak self] (forecastResult) in
       guard let self = self else { return }
       
       self.mainView.forecastData = forecastResult
     })
+    
+    navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(goBack))
   }
- 
-
-//  private func parsedTemperature() -> ForecastResult? {
-//    do {
-//      if let file = Bundle.main.url(forResource: "FiveDayWeather", withExtension: "json") {
-//        let data = try Data(contentsOf: file)
-//
-//        let decoder = JSONDecoder()
-//        let result = try decoder.decode(ForecastResult.self, from: data)
-//        //        print(result)
-//        return result
-//
-//      }
-//      //    } catch {
-//      //      print(error.localizedDescription)
-//    } catch let DecodingError.dataCorrupted(context) {
-//      print(context)
-//    } catch let DecodingError.keyNotFound(key, context) {
-//      print("Key '\(key)' not found:", context.debugDescription)
-//      print("codingPath:", context.codingPath)
-//    } catch let DecodingError.valueNotFound(value, context) {
-//      print("Value '\(value)' not found:", context.debugDescription)
-//      print("codingPath:", context.codingPath)
-//    } catch let DecodingError.typeMismatch(type, context)  {
-//      print("Type '\(type)' mismatch:", context.debugDescription)
-//      print("codingPath:", context.codingPath)
-//    } catch {
-//      print("error: ", error)
-//    }
-//    return nil
-//  }
+  
+  @objc func goBack() {
+    self.dismiss(animated: true)
+  }
   
 }
 extension WeatherForecastViewController: WeatherViewDelegate {
