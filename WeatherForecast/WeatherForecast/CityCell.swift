@@ -10,37 +10,33 @@ import UIKit
 
 class CityCell: UITableViewCell {
   
-  let idLabel: UILabel = {
+  let cityIdLabel: UILabel = {
     let label = UILabel()
-    label.text = "id "
-    label.font = UIFont.systemFont(ofSize: 14)
+    label.font = UIFont.systemFont(ofSize: 13)
     label.textAlignment = .center
     label.translatesAutoresizingMaskIntoConstraints = false
     return label
   }()
   
-  let coordLabel: UILabel = {
+  let coordonatesLabel: UILabel = {
     let label = UILabel()
-    label.text = "coordonates "
-    label.font = UIFont.boldSystemFont(ofSize: 14)
+    label.font = UIFont.systemFont(ofSize: 13)
     label.textAlignment = .center
     label.translatesAutoresizingMaskIntoConstraints = false
     return label
   }()
   
-  let nameLabel: UILabel = {
+  let cityNameLabel: UILabel = {
     let label = UILabel()
-    label.text = "city name "
-    label.font = UIFont.systemFont(ofSize: 14)
+    label.font = UIFont.systemFont(ofSize: 13)
     label.textAlignment = .center
     label.translatesAutoresizingMaskIntoConstraints = false
     return label
   }()
   
-  let countryLabel: UILabel = {
+  let countryNameLabel: UILabel = {
     let label = UILabel()
-    label.text = "country name "
-    label.font = UIFont.systemFont(ofSize: 14)
+    label.font = UIFont.systemFont(ofSize: 13)
     label.textAlignment = .center
     label.translatesAutoresizingMaskIntoConstraints = false
     return label
@@ -48,29 +44,28 @@ class CityCell: UITableViewCell {
   
   func setupLayout() {
     
-    addSubview(idLabel)
-    addSubview(coordLabel)
-    addSubview(nameLabel)
-    addSubview(countryLabel)
+    addSubview(cityIdLabel)
+    addSubview(coordonatesLabel)
+    addSubview(cityNameLabel)
+    addSubview(countryNameLabel)
     
     NSLayoutConstraint.activate([
+      cityIdLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 5),
+      cityIdLabel.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
+      cityIdLabel.widthAnchor.constraint(equalTo: coordonatesLabel.widthAnchor),
       
-      idLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-      idLabel.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
-      idLabel.widthAnchor.constraint(equalTo: coordLabel.widthAnchor),
+      coordonatesLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 5),
+      coordonatesLabel.leadingAnchor.constraint(equalTo: cityIdLabel.trailingAnchor, constant: 5),
+      coordonatesLabel.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
       
-      coordLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-      coordLabel.leadingAnchor.constraint(equalTo: idLabel.trailingAnchor, constant: 10),
-      coordLabel.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
+      cityNameLabel.topAnchor.constraint(equalTo: cityIdLabel.bottomAnchor, constant: 5),
+      cityNameLabel.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
+      cityNameLabel.widthAnchor.constraint(equalTo: countryNameLabel.widthAnchor),
       
-      nameLabel.topAnchor.constraint(equalTo: idLabel.bottomAnchor, constant: 5),
-      nameLabel.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
-      nameLabel.widthAnchor.constraint(equalTo: countryLabel.widthAnchor),
-      
-      countryLabel.topAnchor.constraint(equalTo: coordLabel.bottomAnchor, constant: 5),
-      countryLabel.leadingAnchor.constraint(equalTo: nameLabel.trailingAnchor, constant: 10),
-      countryLabel.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
-      countryLabel.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -5)
+      countryNameLabel.topAnchor.constraint(equalTo: coordonatesLabel.bottomAnchor, constant: 5),
+      countryNameLabel.leadingAnchor.constraint(equalTo: cityNameLabel.trailingAnchor, constant: 5),
+      countryNameLabel.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
+      countryNameLabel.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -5)
     ])
   }
   

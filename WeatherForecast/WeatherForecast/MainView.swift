@@ -42,7 +42,6 @@ class MainView: UIView {
   func updateCities(_ cities: [City]) {
     self.cities = cities
     filteredCities = cities
-    
     tableView.reloadData()
   }
   
@@ -59,7 +58,6 @@ class MainView: UIView {
     searchBar.placeholder = " Search by city name"
     searchBar.isTranslucent = false
     searchBar.translatesAutoresizingMaskIntoConstraints = false
-    
     return searchBar
   }()
   
@@ -120,19 +118,16 @@ extension MainView: UITableViewDataSource {
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    
     var cell = tableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath) as? CityCell
     if cell == nil {
       cell = CityCell()
     }
     cell?.setupLayout()
-    
     let city = filteredCities[indexPath.row]
-    cell?.nameLabel.text = city.name
-    cell?.coordLabel.text = cell?.getCoordinateFormatted(city)
-    cell?.idLabel.text = String(city.id)
-    cell?.countryLabel.text = city.country
-    
+    cell?.cityNameLabel.text = city.name
+    cell?.coordonatesLabel.text = cell?.getCoordinateFormatted(city)
+    cell?.cityIdLabel.text = String(city.id)
+    cell?.countryNameLabel.text = city.country
     return cell!
   }
 }

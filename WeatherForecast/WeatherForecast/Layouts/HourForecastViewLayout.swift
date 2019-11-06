@@ -10,7 +10,7 @@ import UIKit
 
 class HourForecastViewLayout: UICollectionViewFlowLayout {
   
-  private let minColumnWidth: CGFloat = 100
+  private let minColumnWidth: CGFloat = 120
   private let cellHeight: CGFloat = 140
   
   override func prepare() {

@@ -22,7 +22,6 @@ class WeatherForecastViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    
     let network = NetworkManager()
     network.getWeatherData(cityId: cityID, completionHandler: { [weak self] (forecastResult) in
       guard let self = self else { return }
@@ -30,7 +29,11 @@ class WeatherForecastViewController: UIViewController {
       self.mainView.forecastData = forecastResult
     })
     
-    navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(goBack))
+    let backButton = UIBarButtonItem(image: UIImage(named: "ic_back"),
+                                     style: .plain,
+                                     target: self,
+                                     action: #selector(goBack))
+    navigationItem.leftBarButtonItem = backButton
   }
   
   @objc func goBack() {

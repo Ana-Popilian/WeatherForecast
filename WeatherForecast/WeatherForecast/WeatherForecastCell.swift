@@ -11,10 +11,9 @@ import UIKit
 
 class WeatherForecastForFiveDaysCell: UICollectionViewCell, Identifiable {
   
-  
   override init(frame: CGRect) {
     super.init(frame: frame)
-    self.backgroundColor = UIColor(red: 11/255, green: 57/255, blue: 32/255, alpha: 1)
+    self.backgroundColor = ColorHelper.customGreen
     setupLayoutForCell()
   }
   
@@ -40,6 +39,7 @@ class WeatherForecastForFiveDaysCell: UICollectionViewCell, Identifiable {
     let label = UILabel()
     label.textColor = .white
     label.font = UIFont.boldSystemFont(ofSize: 13)
+    label.textAlignment = .center
     label.translatesAutoresizingMaskIntoConstraints = false
     return label
   }()

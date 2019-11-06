@@ -89,7 +89,7 @@ class WeatherForecastView: UIView {
   }()
   
   func setupUI() {
-    self.backgroundColor = UIColor(red: 11/255, green: 57/255, blue: 32/255, alpha: 1)
+    self.backgroundColor = ColorHelper.customGreen
     weatherForFiveDaysCollectionView.dataSource = self
     
     addSubview(cityNameLabel)
@@ -121,8 +121,8 @@ class WeatherForecastView: UIView {
       windView.widthAnchor.constraint(equalTo: pressureView.widthAnchor),
       
       weatherForFiveDaysCollectionView.topAnchor.constraint(equalTo: pressureView.bottomAnchor, constant: 15),
-      weatherForFiveDaysCollectionView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 5),
-      weatherForFiveDaysCollectionView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -5),
+      weatherForFiveDaysCollectionView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
+      weatherForFiveDaysCollectionView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
       weatherForFiveDaysCollectionView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
     ])
   }
