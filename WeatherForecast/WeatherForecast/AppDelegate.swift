@@ -15,22 +15,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     
-            window = UIWindow(frame: UIScreen.main.bounds)
-//            let mainVC = ViewController()
+    window = UIWindow(frame: UIScreen.main.bounds)
     
-            let nextViewController = ViewController()
-             let mainVC = UINavigationController(rootViewController: nextViewController)
+    let nextViewController = ViewController()
+    let mainVC = UINavigationController(rootViewController: nextViewController)
     window?.rootViewController = mainVC
-            window?.makeKeyAndVisible()
-            return true
-    
-    // weather view controller
-//    window = UIWindow(frame: UIScreen.main.bounds)
-//    let mainVC = WeatherForecastViewController()
-//    window?.rootViewController = mainVC
-//    window?.makeKeyAndVisible()
-//    return true
-  
+    window?.makeKeyAndVisible()
+    return true
     
   }
   

@@ -15,7 +15,7 @@ protocol MainViewDelegate : class {
 
 class MainView: UIView {
   
-  private let cellId = "cellId"
+//  private let cellId = "cellId"
   weak var delegate : MainViewDelegate?
   
   var filteredCities = [City]()
@@ -47,7 +47,7 @@ class MainView: UIView {
   
   private let tableView: UITableView = {
     let tableView = UITableView()
-    tableView.register(CityCell.self, forCellReuseIdentifier: "cellId")
+    tableView.register(CityCell.self, forCellReuseIdentifier: CityCell.identifier)
     tableView.translatesAutoresizingMaskIntoConstraints = false
     return tableView
   }()
@@ -55,7 +55,7 @@ class MainView: UIView {
   private let searchBar: UISearchBar = {
     let searchBar = UISearchBar()
     searchBar.searchBarStyle = UISearchBar.Style.default
-    searchBar.placeholder = " Search by city name"
+    searchBar.placeholder = "Search by city name"
     searchBar.isTranslucent = false
     searchBar.translatesAutoresizingMaskIntoConstraints = false
     return searchBar
@@ -118,7 +118,7 @@ extension MainView: UITableViewDataSource {
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    var cell = tableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath) as? CityCell
+    var cell = tableView.dequeueReusableCell(withIdentifier: CityCell.identifier, for: indexPath) as? CityCell
     if cell == nil {
       cell = CityCell()
     }
@@ -135,12 +135,9 @@ extension MainView: UITableViewDataSource {
 extension MainView: UITableViewDelegate {
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    
     searchBar.resignFirstResponder()
     showLocationOnMapByRow(indexPath.row)
-    
     let selectedCity = filteredCities[indexPath.row]
-    
     delegate?.didSelectedCity(selectedCity)
   }
 }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CityCell: UITableViewCell {
+class CityCell: UITableViewCell, Identifiable {
   
   let cityIdLabel: UILabel = {
     let label = UILabel()

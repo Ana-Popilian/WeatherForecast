@@ -160,9 +160,7 @@ extension WeatherForecastView: UICollectionViewDataSource {
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WeatherForecastForFiveDaysCell.identifier, for: indexPath) as! WeatherForecastForFiveDaysCell
     let currentHourForecast = forecastData!.hourForcasts[indexPath.row]
-    
     cell.bindData(currentHourForecast)
-    
     return cell
   }
 }
