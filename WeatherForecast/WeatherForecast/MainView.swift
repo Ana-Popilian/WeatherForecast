@@ -15,11 +15,8 @@ protocol MainViewDelegate : class {
 
 class MainView: UIView {
   
-//  private let cellId = "cellId"
   weak var delegate : MainViewDelegate?
-  
   var filteredCities = [City]()
-  var isSearching = false
   private var cities = [City]()
   
   override init(frame: CGRect) {
@@ -32,7 +29,7 @@ class MainView: UIView {
     
     searchBar.returnKeyType = UIReturnKeyType.done
     searchBar.delegate = self
-    UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.red]
+    UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.blue]
   }
   
   required init?(coder aDecoder: NSCoder) {
@@ -110,7 +107,7 @@ class MainView: UIView {
     mapView.setRegion(region, animated: true)
   }
 }
-
+// MARK UITableViewDataSource
 extension MainView: UITableViewDataSource {
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

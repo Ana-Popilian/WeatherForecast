@@ -17,8 +17,7 @@ class ViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    view.backgroundColor = .lightGray
-    
+
     mainView = MainView()
     mainView.delegate = self
     view = mainView
@@ -46,13 +45,11 @@ class ViewController: UIViewController {
 
 extension ViewController: MainViewDelegate {
   func didSelectedCity(_ city: City) {
-    //TO DO: Implement transition to second screen
     let nextViewController = WeatherForecastViewController()
     nextViewController.cityID = String(city.id)
    let navController = UINavigationController(rootViewController: nextViewController)
     navController.modalPresentationStyle = .fullScreen
     self.present(navController, animated: true)
-    print("should show the new screen")
   }
 }
 
