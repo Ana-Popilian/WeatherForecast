@@ -25,8 +25,6 @@ class WeatherForecastView: UIView {
     }
   }
   
-  let networkManager = NetworkManager()
-  
   override init(frame: CGRect) {
     super.init(frame: frame)
     self.backgroundColor = .white
@@ -130,7 +128,6 @@ class WeatherForecastView: UIView {
   private func updateUI(forecastResult: ForecastResult) {
     
     let temp = Int(forecastResult.hourForcasts.first!.details.temperature)
-    
     cityNameLabel.text = String(forecastResult.city.name)
     
     let celsiusTemperature = convertFahrenheitToCelsius(tempInFahrenheit: Double(temp))
@@ -153,7 +150,6 @@ extension WeatherForecastView: UICollectionViewDataSource {
     guard let forecastData = forecastData else {
       return 0
     }
-    
     return forecastData.hourForcasts.count
   }
   

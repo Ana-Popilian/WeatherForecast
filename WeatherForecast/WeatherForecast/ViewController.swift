@@ -17,7 +17,6 @@ class ViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-
     mainView = MainView()
     mainView.delegate = self
     view = mainView

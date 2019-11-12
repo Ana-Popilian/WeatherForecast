@@ -24,8 +24,6 @@ class NetworkManager {
         
         completionHandler(response)
         
-        print(response)
-        
       } catch let DecodingError.dataCorrupted(context) {
         print(context)
       } catch let DecodingError.keyNotFound(key, context) {

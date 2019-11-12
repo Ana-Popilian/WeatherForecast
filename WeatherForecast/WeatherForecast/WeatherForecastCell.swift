@@ -59,7 +59,6 @@ class WeatherForecastForFiveDaysCell: UICollectionViewCell, Identifiable {
     addSubview(temperatureLabel)
     
     NSLayoutConstraint.activate([
-      
       dateLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
       dateLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
       dateLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
@@ -70,4 +69,3 @@ class WeatherForecastForFiveDaysCell: UICollectionViewCell, Identifiable {
     ])
   }
 }
-
