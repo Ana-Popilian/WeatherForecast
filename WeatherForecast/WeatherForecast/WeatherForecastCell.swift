@@ -11,6 +11,8 @@ import UIKit
 
 class WeatherForecastForFiveDaysCell: UICollectionViewCell, Identifiable {
   
+  let forecastView = WeatherForecastView()
+  
   override init(frame: CGRect) {
     super.init(frame: frame)
     self.backgroundColor = ColorHelper.customGreen
@@ -24,17 +26,12 @@ class WeatherForecastForFiveDaysCell: UICollectionViewCell, Identifiable {
   func bindData(_ hourForecast: HourForcast) {
     
     let temp = Int(hourForecast.details.temperature)
-    let celsiusTemperature = convertFahrenheitToCelsius(tempInFahrenheit: Double(temp))
+    let celsiusTemperature = forecastView.convertFahrenheitToCelsius(tempInFahrenheit: Double(temp))
     temperatureLabel.text = "\(celsiusTemperature)℃"
     
     dateLabel.text = hourForecast.formattedDate
   }
-  
-  func convertFahrenheitToCelsius(tempInFahrenheit: Double) -> Int {
-    let celsius = (tempInFahrenheit - 32) * (5/9)
-    return Int(celsius)
-  }
-  
+    
   private let dateLabel: UILabel = {
     let label = UILabel()
     label.textColor = .white
