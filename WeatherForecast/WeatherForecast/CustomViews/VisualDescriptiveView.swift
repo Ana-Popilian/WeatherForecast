@@ -13,10 +13,18 @@ final class VisualDescriptiveView: UIView {
   private var imageView: UIImageView!
   private var titleLabel: UILabel!
   
+  private enum ViewTrait {
+    static let defaultPadding: CGFloat = 10
+    static let defaultVerticalSpacing: CGFloat = 3
+  }
+  
   init(image: UIImage, title: String) {
     super.init(frame: .zero)
     setupImageView(image)
     setupTitleLabel(title)
+    
+    addSubviews()
+    setupConstraints()
   }
   
   required init?(coder: NSCoder) {
@@ -28,19 +36,12 @@ final class VisualDescriptiveView: UIView {
   }
 }
 
+
+//MARK: - Private Zone
 private extension VisualDescriptiveView {
   
   func setupImageView(_ image: UIImage) {
     imageView = UIImageView(image: image)
-    imageView.translatesAutoresizingMaskIntoConstraints = false
-    self.addSubview(imageView)
-    
-    NSLayoutConstraint.activate([
-      imageView.topAnchor.constraint(equalTo: topAnchor, constant: 10),
-      imageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
-      imageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
-      imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor)
-    ])
   }
   
   func setupTitleLabel(_ title: String) {
@@ -50,11 +51,26 @@ private extension VisualDescriptiveView {
     titleLabel.font = UIFont.systemFont(ofSize: 13)
     titleLabel.textAlignment = .center
     titleLabel.textColor = .white
-    titleLabel.translatesAutoresizingMaskIntoConstraints = false
-    self.addSubview(titleLabel)
-    
+  }
+}
+
+
+//MARK: - Constraints Zone
+private extension VisualDescriptiveView {
+  
+  func addSubviews() {
+    addSubviewWithoutConstraints(imageView)
+    addSubviewWithoutConstraints(titleLabel)
+  }
+  
+  func setupConstraints() {
     NSLayoutConstraint.activate([
-      titleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 3),
+      imageView.topAnchor.constraint(equalTo: topAnchor, constant: ViewTrait.defaultPadding),
+      imageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: ViewTrait.defaultPadding),
+      imageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -ViewTrait.defaultPadding),
+      imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor),
+      
+      titleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: ViewTrait.defaultVerticalSpacing),
       titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
       titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
       titleLabel.bottomAnchor.constraint(equalTo: bottomAnchor)
