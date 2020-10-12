@@ -11,29 +11,51 @@ import UIKit
 final class ViewController: UIViewController {
   
   private var mainView: MainView!
+  private var networkManager = NetworkManager()
+  private var latitude: Double!
+  private var longitude: Double!
   
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    mainView = MainView(delegate: self)
+    mainView = MainView()
     view = mainView
     
-    let parserService = ParserService()
-    let cities = parserService.parsedCities()
-    mainView.updateCities(cities)
+    getWeatherData() 
+//    let parserService = ParserService()
+//    let cities = parserService.parsedCities()
+//    mainView.updateCities(cities)
   }
 }
 
-extension ViewController: MainViewDelegate {
-  
-  func didSelectedCity(_ city: CityModel) {
-    let nextViewController = WeatherForecastViewController()
-    nextViewController.cityID = String(city.id)
+extension ViewController {
+
+  func getWeatherData() {
+    let appId = "9d4b20529a15bc127ff039cecd2d4793"
+    let lat = "52.380457"
+    let long = "4.873351"
+    let url = URL(string: "https://api.openweathermap.org/data/2.5/forecast?lat=\(lat)&lon=\(long)&units=metric&appid=\(appId)")!
     
-    let navController = UINavigationController(rootViewController: nextViewController)
-    navController.modalPresentationStyle = .fullScreen
-    
-    present(navController, animated: true)
+    networkManager.getData(of: WeatherModel.self, from: url) { (response) in
+      switch response {
+        
+      case .failure(let error):
+        if error is DataError {
+          print(error)
+        } else {
+          print(error.localizedDescription)
+        }
+        print(error.localizedDescription)
+        
+      case .success(let weatherData):
+        
+        print(weatherData)
+        }
+        DispatchQueue.main.async {
+//          self.mainView.insertNewItems(movies.results, at: indexPaths)
+        }
+      }
+    }
   }
-}
+
 

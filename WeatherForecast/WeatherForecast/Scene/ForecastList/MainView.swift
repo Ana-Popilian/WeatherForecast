@@ -9,14 +9,8 @@
 import UIKit
 import MapKit
 
-protocol MainViewDelegate : class {
-  
-  func didSelectedCity(_ city: CityModel)
-}
 
 final class MainView: UIView {
-  
-  private weak var delegate : MainViewDelegate?
   
   private var cityNameLabel: UILabel!
   private var containerView: UIView!
@@ -32,31 +26,30 @@ final class MainView: UIView {
   private var segmentControl: UISegmentedControl!
   private var tableView: UITableView!
   
-  
-  private var filteredCities = [CityModel]()
-  private var cities = [CityModel]()
+  private var weatherDate: List!
+
   
   private enum ViewTrait {
     static let heightMultiplier: CGFloat = 0.5
   }
   
-  required init(delegate: MainViewDelegate?) {
+  required init() {
     super.init(frame: .zero)
-    self.delegate = delegate
-    
+   
     setupUI()
-    
   }
   
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
-  
-  func updateCities(_ cities: [CityModel]) {
-    self.cities = cities
-    filteredCities = cities
-    tableView.reloadData()
+  func updateUI(_ weatherData: List) {
+    
   }
+//  func updateCities(_ cities: [CityModel]) {
+//    self.cities = cities
+//    filteredCities = cities
+//    tableView.reloadData()
+//  }
   
   private let searchBar: UISearchBar = {
     let searchBar = UISearchBar()
@@ -147,7 +140,7 @@ private extension MainView {
   
   func setupPressureLabel() {
     let font = UIFont.systemFont(ofSize: 14)
-    pressureLabel = UILabel(text: "998 hpa", font: font, textAlignment: .center, textColor: .black)
+    pressureLabel = UILabel(text: "998 hPa", font: font, textAlignment: .center, textColor: .black)
   }
   
   func setupSegmentControl() {
@@ -173,13 +166,13 @@ private extension MainView {
   
   func setupTableView() {
     tableView = UITableView()
-    tableView.register(CityCell.self, forCellReuseIdentifier: CityCell.identifier)
+    tableView.register(WeatherCell.self, forCellReuseIdentifier: WeatherCell.identifier)
     tableView.dataSource = self
   }
   
-  func filterCityByName(typedWord: String, myCities: [CityModel]) -> [CityModel] {
-    return myCities.filter { $0.name.contains(typedWord) }
-  }
+//  func filterCityByName(typedWord: String, myCities: [CityModel]) -> [CityModel] {
+//    return myCities.filter { $0.name.contains(typedWord) }
+//  }
 }
 
 
@@ -187,12 +180,13 @@ private extension MainView {
 extension MainView: UITableViewDataSource {
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    filteredCities.count
+    return 10
+//    filteredCities.count
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: CityCell.identifier, for: indexPath) as! CityCell
-    let city = filteredCities[indexPath.row]
+    let cell = tableView.dequeueReusableCell(withIdentifier: WeatherCell.identifier, for: indexPath) as! WeatherCell
+//    let city = filteredCities[indexPath.row]
     
 //    cell.updateUI(by: city)
     
@@ -202,14 +196,14 @@ extension MainView: UITableViewDataSource {
 
 
 //MARK: - UISearchBarDelegate
-extension MainView: UISearchBarDelegate {
-  
-  func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-    let filterResult = filterCityByName(typedWord: searchText, myCities: cities)
-    filteredCities = filterResult
-    tableView.reloadData()
-  }
-}
+//extension MainView: UISearchBarDelegate {
+//
+//  func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+//    let filterResult = filterCityByName(typedWord: searchText, myCities: cities)
+//    filteredCities = filterResult
+//    tableView.reloadData()
+//  }
+//}
 
 
 //MARK: - Constraints Zone
