@@ -59,8 +59,8 @@ private extension VisualDescriptiveView {
 private extension VisualDescriptiveView {
   
   func addSubviews() {
-    addSubviewWithoutConstraints(imageView)
-    addSubviewWithoutConstraints(titleLabel)
+    addSubviewWC(imageView)
+    addSubviewWC(titleLabel)
   }
   
   func setupConstraints() {

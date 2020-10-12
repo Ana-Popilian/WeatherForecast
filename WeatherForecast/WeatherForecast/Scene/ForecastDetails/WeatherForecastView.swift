@@ -113,9 +113,11 @@ private extension WeatherForecastView {
     
     let temp = forecastResult.hourForcasts.first!.details.temperature
     cityNameLabel.text = forecastResult.city.name
+    let intTemp = Int(temp)
     
     let celsiusTemperature = ConvertorHelper.convertFahrenheitToCelsius(tempInFahrenheit: temp)
-    currentTemperatureLabel.text = "\(celsiusTemperature)℃"
+    currentTemperatureLabel.text = String("\(intTemp)℃")
+//    "\(celsiusTemperature)℃"
     humidityView.updateTitle("Humidity\n\(forecastResult.hourForcasts.first!.details.humidity)%")
     pressureView.updateTitle("Pressure\n\(forecastResult.hourForcasts.first!.details.pressure)")
     windView.updateTitle("Wind\n\(forecastResult.hourForcasts.first!.wind.speed)km/h")
@@ -127,12 +129,12 @@ private extension WeatherForecastView {
 private extension WeatherForecastView {
   
   func addSubviews() {
-    addSubviewWithoutConstraints(cityNameLabel)
-    addSubviewWithoutConstraints(currentTemperatureLabel)
-    addSubviewWithoutConstraints(humidityView)
-    addSubviewWithoutConstraints(pressureView)
-    addSubviewWithoutConstraints(windView)
-    addSubviewWithoutConstraints(weatherForFiveDaysCollectionView)
+    addSubviewWC(cityNameLabel)
+    addSubviewWC(currentTemperatureLabel)
+    addSubviewWC(humidityView)
+    addSubviewWC(pressureView)
+    addSubviewWC(windView)
+    addSubviewWC(weatherForFiveDaysCollectionView)
   }
   
   func setupConstraints() {
@@ -164,4 +166,3 @@ private extension WeatherForecastView {
     ])
   }
 }
-

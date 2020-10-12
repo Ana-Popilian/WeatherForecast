@@ -29,8 +29,9 @@ final class WeatherForecastForFiveDaysCell: UICollectionViewCell, Identifiable {
   func updateUI(by hourForecast: HourForcast) {
     
     let temp = hourForecast.details.temperature
-    let celsiusTemperature = ConvertorHelper.convertFahrenheitToCelsius(tempInFahrenheit: temp)
-    temperatureLabel.text = "\(celsiusTemperature)℃"
+//    let celsiusTemperature = ConvertorHelper.convertFahrenheitToCelsius(tempInFahrenheit: temp)
+    temperatureLabel.text = String(temp)
+//    "\(celsiusTemperature)℃"
     
     dateLabel.text = hourForecast.formattedDate
   }
@@ -57,8 +58,8 @@ final class WeatherForecastForFiveDaysCell: UICollectionViewCell, Identifiable {
 private extension WeatherForecastForFiveDaysCell {
   
   func addSubviews() {
-    addSubviewWithoutConstraints(dateLabel)
-    addSubviewWithoutConstraints(temperatureLabel)
+    addSubviewWC(dateLabel)
+    addSubviewWC(temperatureLabel)
   }
   
   func setupConstraints() {

@@ -14,7 +14,8 @@ final class NetworkManager {
     
     let apiKey = "&appid=9d4b20529a15bc127ff039cecd2d4793"
     let api = "http://api.openweathermap.org/data/2.5/forecast?id="
-    let url = URL(string: api + cityId + apiKey)!
+    let system = "&units=metric"
+    let url = URL(string: api + cityId +  system + apiKey)!
     
     let request = URLSession.shared.dataTask(with: url) { (data, response, error) in
       
