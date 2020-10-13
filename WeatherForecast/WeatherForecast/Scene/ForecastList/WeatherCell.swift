@@ -28,18 +28,12 @@ final class WeatherCell: UITableViewCell, Identifiable {
     fatalError("init(coder:) has not been implemented")
   }
   
-//  private lazy var cityIdLabel: UILabel = getDefaultLabel()
-//  private lazy var coordonatesLabel: UILabel = getDefaultLabel()
-//  private lazy var cityNameLabel: UILabel = getDefaultLabel()
-//  private lazy var countryNameLabel: UILabel = getDefaultLabel()
-//
-//  func updateUI(by city: CityModel) {
-//
-//    cityNameLabel.text = city.name
-//    coordonatesLabel.text = getCoordinateFormatted(city)
-//    cityIdLabel.text = String(city.id)
-//    countryNameLabel.text = city.country
-//  }
+  func bindCell(_ data: List) {
+    hourLabel.text = "\(data.date)"
+    let temp = String(data.tempInfo.temp)
+    temperatureLabel.text = temp
+//    weatherImage.text = data.weather.first?.icon
+  }
 }
 
 
@@ -69,17 +63,6 @@ private extension WeatherCell {
     let image = UIImage(named: "img_wind")!
     weatherImage = UIImageView(image: image)
   }
-  
-//  func getDefaultLabel() -> UILabel {
-//    let label = UILabel()
-//    label.font = UIFont.systemFont(ofSize: 13)
-//    label.textAlignment = .center
-//    return label
-//  }
-//
-//  func getCoordinateFormatted(_ city: CityModel) -> String {
-//    return "lat: \(city.coord.lat) lon: \(city.coord.lon)"
-//  }
 }
 
 

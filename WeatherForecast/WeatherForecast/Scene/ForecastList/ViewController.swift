@@ -11,6 +11,7 @@ import UIKit
 final class ViewController: UIViewController {
   
   private var mainView: MainView!
+  private var weatherData1: WeatherModel!
   private var networkManager = NetworkManager()
   private var latitude: Double!
   private var longitude: Double!
@@ -21,15 +22,16 @@ final class ViewController: UIViewController {
     mainView = MainView()
     view = mainView
     
-    getWeatherData() 
-//    let parserService = ParserService()
-//    let cities = parserService.parsedCities()
-//    mainView.updateCities(cities)
+    getWeatherData()
+//    mainView.updateUI(weatherData1)
+    //    let parserService = ParserService()
+    //    let cities = parserService.parsedCities()
+    //    mainView.updateCities(cities)
   }
 }
 
 extension ViewController {
-
+  
   func getWeatherData() {
     let appId = "9d4b20529a15bc127ff039cecd2d4793"
     let lat = "52.380457"
@@ -48,14 +50,19 @@ extension ViewController {
         print(error.localizedDescription)
         
       case .success(let weatherData):
-        
-        print(weatherData)
+  
+          print(weatherData)
+          self.weatherData1 = weatherData
         }
         DispatchQueue.main.async {
-//          self.mainView.insertNewItems(movies.results, at: indexPaths)
+          guard self.weatherData1 != nil else {
+            return
+          }
+          self.mainView.updateWeatherData(self.weatherData1)
+
         }
       }
     }
-  }
+}
 
 

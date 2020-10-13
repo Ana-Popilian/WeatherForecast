@@ -26,8 +26,7 @@ final class MainView: UIView {
   private var segmentControl: UISegmentedControl!
   private var tableView: UITableView!
   
-  private var weatherDate: List!
-
+  private var weatherData: WeatherModel!
   
   private enum ViewTrait {
     static let heightMultiplier: CGFloat = 0.5
@@ -42,15 +41,22 @@ final class MainView: UIView {
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
-  func updateUI(_ weatherData: List) {
-    
+  func updateWeatherData(_ weather: WeatherModel) {
+    weatherData = weather
+    tableView.reloadData()
+    let temp = Int(weather.weatherList.first!.tempInfo.temp)
+    temperatureLabel.text = "\(temp)℃"
+    descriptionLabel.text = "\(weather.weatherList.first!.weather.first!.description)"
+    humidityLabel.text = "\(weather.weatherList.first!.tempInfo.humidity)%"
+    windLabel.text = "\(weather.weatherList.first!.wind.speed)m/s"
+    pressureLabel.text = "\(weather.weatherList.first!.tempInfo.pressure)hPA"
   }
 //  func updateCities(_ cities: [CityModel]) {
 //    self.cities = cities
 //    filteredCities = cities
 //    tableView.reloadData()
 //  }
-  
+ 
   private let searchBar: UISearchBar = {
     let searchBar = UISearchBar()
     searchBar.searchBarStyle = UISearchBar.Style.default
@@ -170,6 +176,7 @@ private extension MainView {
     tableView.dataSource = self
   }
   
+  
 //  func filterCityByName(typedWord: String, myCities: [CityModel]) -> [CityModel] {
 //    return myCities.filter { $0.name.contains(typedWord) }
 //  }
@@ -180,15 +187,18 @@ private extension MainView {
 extension MainView: UITableViewDataSource {
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return 10
-//    filteredCities.count
+    if weatherData == nil {
+      return 0
+    } else {
+      return weatherData.weatherList.count
+    }
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: WeatherCell.identifier, for: indexPath) as! WeatherCell
-//    let city = filteredCities[indexPath.row]
-    
-//    cell.updateUI(by: city)
+    let data = weatherData.weatherList[indexPath.row]
+
+    cell.bindCell(data)
     
     return cell
   }
