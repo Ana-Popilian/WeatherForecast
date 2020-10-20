@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  ForecastWeather
+//  WeatherForecast
 //
 //  Created by Ana on 16/10/2019.
 //  Copyright © 2019 Ana. All rights reserved.

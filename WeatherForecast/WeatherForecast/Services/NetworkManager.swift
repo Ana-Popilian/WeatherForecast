@@ -37,7 +37,9 @@ final class NetworkManager: NSObject {
       if 200 ... 299 ~= response.statusCode {
         if let data = data {
           do {
-            let decodedData: T = try JSONDecoder().decode(type, from: data);  completion(.success(decodedData))
+            let decoder = JSONDecoder()
+            decoder.dateDecodingStrategy = .secondsSince1970
+            let decodedData: T = try decoder.decode(type, from: data);  completion(.success(decodedData))
           }
           catch {
             completion(.failure(DataError.decodingError))

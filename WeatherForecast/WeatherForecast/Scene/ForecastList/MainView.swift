@@ -1,13 +1,12 @@
 //
 //  MainView.swift
-//  ForecastWeather
+//  WeatherForecast
 //
 //  Created by Ana on 16/10/2019.
 //  Copyright © 2019 Ana. All rights reserved.
 //
 
 import UIKit
-import MapKit
 
 
 final class MainView: UIView {
@@ -26,6 +25,7 @@ final class MainView: UIView {
   private var segmentControl: UISegmentedControl!
   private var tableView: UITableView!
   
+  private var todayData: WeatherModel!
   private var weatherData: WeatherModel!
   
   private enum ViewTrait {
@@ -34,36 +34,49 @@ final class MainView: UIView {
   
   required init() {
     super.init(frame: .zero)
-   
+
     setupUI()
   }
   
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
+  
   func updateWeatherData(_ weather: WeatherModel) {
     weatherData = weather
-    tableView.reloadData()
+        tableView.reloadData()
+    cityNameLabel.text = weather.city.name
     let temp = Int(weather.weatherList.first!.tempInfo.temp)
     temperatureLabel.text = "\(temp)℃"
+
+    guard let image = weather.weatherList.first?.weather.first?.icon else {
+      return
+    }
+    descriptionImageView.downloadImage(name: image, downloadFinishedHandler: {
+    })
+
     descriptionLabel.text = "\(weather.weatherList.first!.weather.first!.description)"
     humidityLabel.text = "\(weather.weatherList.first!.tempInfo.humidity)%"
     windLabel.text = "\(weather.weatherList.first!.wind.speed)m/s"
     pressureLabel.text = "\(weather.weatherList.first!.tempInfo.pressure)hPA"
+    
   }
-//  func updateCities(_ cities: [CityModel]) {
-//    self.cities = cities
-//    filteredCities = cities
-//    tableView.reloadData()
-//  }
+  
+  func filterTodayWeatherData() {
+    let calendar = Calendar.current
+       let weekOfYear = calendar.component(.weekOfYear, from: Date.init(timeIntervalSinceNow: 0))
+    
+//    let todayForcast = weatherData.weatherList.filter({ _ in weatherData.weatherList.first?.date == weekOfYear })
+
+  }
  
-  private let searchBar: UISearchBar = {
-    let searchBar = UISearchBar()
-    searchBar.searchBarStyle = UISearchBar.Style.default
-    searchBar.placeholder = "Search by city name"
-    searchBar.isTranslucent = false
-    return searchBar
-  }()
+//  private let searchBar: UISearchBar = {
+//    let searchBar = UISearchBar()
+//    searchBar.searchBarStyle = UISearchBar.Style.default
+//    searchBar.placeholder = "Search by city name"
+//    searchBar.isTranslucent = false
+//    return searchBar
+//  }()
 }
 
 
@@ -71,12 +84,9 @@ final class MainView: UIView {
 private extension MainView {
   
   func setupUI() {
-    
     backgroundColor = .white
-    //    searchBar.returnKeyType = UIReturnKeyType.done
-    //    searchBar.delegate = self
+  
     //    UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.blue]
-    //
     setupCityName()
     setupContainer()
     setupTemperatureLabel()
@@ -174,6 +184,7 @@ private extension MainView {
     tableView = UITableView()
     tableView.register(WeatherCell.self, forCellReuseIdentifier: WeatherCell.identifier)
     tableView.dataSource = self
+    
   }
   
   
@@ -197,7 +208,6 @@ extension MainView: UITableViewDataSource {
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: WeatherCell.identifier, for: indexPath) as! WeatherCell
     let data = weatherData.weatherList[indexPath.row]
-
     cell.bindCell(data)
     
     return cell
@@ -249,8 +259,8 @@ private extension MainView {
       
       descriptionImageView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 10),
       descriptionImageView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
-      descriptionImageView.heightAnchor.constraint(equalToConstant: 25),
-      descriptionImageView.widthAnchor.constraint(equalToConstant: 25),
+      descriptionImageView.heightAnchor.constraint(equalToConstant: 35),
+      descriptionImageView.widthAnchor.constraint(equalToConstant: 35),
       
       descriptionLabel.leadingAnchor.constraint(equalTo: descriptionImageView.trailingAnchor, constant: 20),
       descriptionLabel.centerYAnchor.constraint(equalTo: descriptionImageView.centerYAnchor),

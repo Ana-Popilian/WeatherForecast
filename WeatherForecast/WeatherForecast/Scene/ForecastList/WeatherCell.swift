@@ -1,6 +1,6 @@
 //
 //  CityCell.swift
-//  ForecastWeather
+//  WeatherForecast
 //
 //  Created by Ana on 16/10/2019.
 //  Copyright © 2019 Ana. All rights reserved.
@@ -21,7 +21,8 @@ final class WeatherCell: UITableViewCell, Identifiable {
   }
   
   private enum VT {
-    static let defaultPadding: CGFloat = 30
+    static let defaultPadding: CGFloat = 20
+    static let imageSize: CGFloat = 30
   }
   
   required init?(coder: NSCoder) {
@@ -29,10 +30,17 @@ final class WeatherCell: UITableViewCell, Identifiable {
   }
   
   func bindCell(_ data: List) {
-    hourLabel.text = "\(data.date)"
-    let temp = String(data.tempInfo.temp)
-    temperatureLabel.text = temp
-//    weatherImage.text = data.weather.first?.icon
+    
+    hourLabel.text = data.date.asString(style: .full)
+    
+    let temp = Int(data.tempInfo.temp)
+    temperatureLabel.text = "\(temp)℃"
+    
+    guard let image = data.weather.first?.icon else {
+      return
+    }
+    weatherImage.downloadImage(name: image, downloadFinishedHandler: {
+    })
   }
 }
 
@@ -51,17 +59,16 @@ private extension WeatherCell {
   
   func setupHourLabel() {
     let font = UIFont.systemFont(ofSize: 13)
-    hourLabel = UILabel(text: "12", font: font, textAlignment: .natural, textColor: .black)
+    hourLabel = UILabel(font: font, textAlignment: .natural, textColor: .black)
   }
   
   func setupTemperatureLabel() {
     let font = UIFont.systemFont(ofSize: 13)
-    temperatureLabel = UILabel(text: "16℃", font: font, textAlignment: .natural, textColor: .black)
+    temperatureLabel = UILabel(font: font, textAlignment: .natural, textColor: .black)
   }
   
   func setupWeatherImage() {
-    let image = UIImage(named: "img_wind")!
-    weatherImage = UIImageView(image: image)
+    weatherImage = UIImageView()
   }
 }
 
@@ -73,7 +80,6 @@ private extension WeatherCell {
     addSubviewWC(hourLabel)
     addSubviewWC(temperatureLabel)
     addSubviewWC(weatherImage)
- 
   }
   
   func setupConstraints() {
@@ -86,8 +92,8 @@ private extension WeatherCell {
       
       weatherImage.centerYAnchor.constraint(equalTo: centerYAnchor),
       weatherImage.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -VT.defaultPadding),
-      weatherImage.heightAnchor.constraint(equalToConstant: 25),
-      weatherImage.widthAnchor.constraint(equalToConstant: 25),
+      weatherImage.heightAnchor.constraint(equalToConstant: VT.imageSize),
+      weatherImage.widthAnchor.constraint(equalToConstant: VT.imageSize),
     ])
   }
 }

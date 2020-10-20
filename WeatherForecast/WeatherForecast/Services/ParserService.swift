@@ -8,6 +8,24 @@
 
 import Foundation
 
+final class ParserService {
+func fetchImage(imageName: String, completion: @escaping (Data?) -> ()) {
+  
+  let baseURl = "http://openweathermap.org/img/wn/\(imageName)@2x.png"
+  let url = URL(string: baseURl)!
+  
+  let request = URLRequest(url: url)
+  let sessionConfig = URLSessionConfiguration.default
+  sessionConfig.timeoutIntervalForResource = 8
+  
+  let session = URLSession(configuration: sessionConfig)
+  
+  let task = session.dataTask(with: request, completionHandler: { data, response, error in
+    completion(data)
+  })
+  task.resume()
+}
+}
 //final class ParserService {
 //  
 //  func parsedCities() -> [CityModel] {

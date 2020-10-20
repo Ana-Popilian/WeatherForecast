@@ -10,12 +10,17 @@ import UIKit
 
 final class WeatherForecastForFiveDaysCell: UICollectionViewCell, Identifiable {
   
+  private var dayLabel: UILabel!
+  private var hourLabel: UILabel!
+  private var temperatureLabel: UILabel!
+  private var forcastImage: UIImageView!
+  
   override init(frame: CGRect) {
     super.init(frame: frame)
     self.backgroundColor = ColorHelper.customGreen
     
-    addSubviews()
-    setupConstraints()
+    setupUI()
+    
   }
   
   private enum ViewTrait {
@@ -26,31 +31,46 @@ final class WeatherForecastForFiveDaysCell: UICollectionViewCell, Identifiable {
     fatalError("init(coder:) has not been implemented")
   }
   
-  func updateUI(by hourForecast: HourForcast) {
+  //  func updateUI(by hourForecast: HourForcast) {
+  //
+  //    dateLabel.text = hourForecast.formattedDate
+  //  }
+  
+}
+
+
+// MARK: - Private Zone
+private extension WeatherForecastForFiveDaysCell {
+  
+  func setupUI() {
+    setupDayLabel()
+    setupHourLabel()
+    sestupForcastImage()
+    setupTemperatureLabel()
     
-    let temp = hourForecast.details.temperature
-//    let celsiusTemperature = ConvertorHelper.convertFahrenheitToCelsius(tempInFahrenheit: temp)
-    temperatureLabel.text = String(temp)
-//    "\(celsiusTemperature)℃"
-    
-    dateLabel.text = hourForecast.formattedDate
+    addSubviews()
+    setupConstraints()
   }
   
-  private let dateLabel: UILabel = {
-    let label = UILabel()
-    label.textColor = .white
-    label.font = UIFont.boldSystemFont(ofSize: 13)
-    label.textAlignment = .center
-    return label
-  }()
+  func setupDayLabel() {
+    let font = UIFont.systemFont(ofSize: 14)
+    dayLabel = UILabel(text: "Tuesday", font: font, textAlignment: .natural, textColor: .black)
+  }
   
-  private let temperatureLabel: UILabel = {
-    let label = UILabel()
-    label.textColor = .white
-    label.font = UIFont.systemFont(ofSize: 13)
-    label.textAlignment = .center
-    return label
-  }()
+  func setupHourLabel() {
+    let font = UIFont.systemFont(ofSize: 14)
+    hourLabel = UILabel(text: "10:00", font: font, textAlignment: .natural, textColor: .black)
+  }
+  
+  func sestupForcastImage() {
+    let image = UIImage(named: "img_humidity")!
+    forcastImage = UIImageView(image: image)
+  }
+  
+  func setupTemperatureLabel() {
+    let font = UIFont.systemFont(ofSize: 14)
+     temperatureLabel = UILabel(text: "13℃", font: font, textAlignment: .natural, textColor: .black)
+  }
 }
 
 
@@ -58,19 +78,19 @@ final class WeatherForecastForFiveDaysCell: UICollectionViewCell, Identifiable {
 private extension WeatherForecastForFiveDaysCell {
   
   func addSubviews() {
-    addSubviewWC(dateLabel)
+    addSubviewWC(dayLabel)
+    addSubviewWC(hourLabel)
+    addSubviewWC(forcastImage)
     addSubviewWC(temperatureLabel)
   }
   
   func setupConstraints() {
     NSLayoutConstraint.activate([
-      dateLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
-      dateLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
-      dateLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
+      dayLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
+      dayLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
       
-      temperatureLabel.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: ViewTrait.defaultVerticalSpacing),
-      temperatureLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
-      temperatureLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
+      hourLabel.topAnchor.constraint(equalTo: topAnchor),
+      hourLabel.leadingAnchor.constraint(equalTo: dayLabel.trailingAnchor),
     ])
   }
 }
