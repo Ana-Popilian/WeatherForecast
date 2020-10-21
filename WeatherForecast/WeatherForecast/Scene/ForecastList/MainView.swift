@@ -59,7 +59,6 @@ final class MainView: UIView {
     humidityLabel.text = "\(weather.weatherList.first!.tempInfo.humidity)%"
     windLabel.text = "\(weather.weatherList.first!.wind.speed)m/s"
     pressureLabel.text = "\(weather.weatherList.first!.tempInfo.pressure)hPA"
-    
   }
   
   func filterTodayWeatherData() {
@@ -172,6 +171,7 @@ private extension MainView {
   @objc func indexChanged(_ sender: UISegmentedControl) {
     switch sender.selectedSegmentIndex{
     case 0:
+      
       print("Today");
     case 1:
       print("Next days")

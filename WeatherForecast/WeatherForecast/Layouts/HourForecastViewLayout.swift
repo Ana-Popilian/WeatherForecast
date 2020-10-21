@@ -11,20 +11,15 @@ import UIKit
 final class HourForecastViewLayout: UICollectionViewFlowLayout {
   
   private enum ViewTrait {
-    static let minColumnWidth: CGFloat = 130
-    static let cellHeight: CGFloat = 140
+    static let cellWidth: CGFloat = UIScreen.main.bounds.width
+    static let cellHeight: CGFloat = UIScreen.main.bounds.width * 0.30
+    static let verticalPadding: CGFloat = 10
   }
   
   override func prepare() {
     super.prepare()
     
-    guard let collectionView = collectionView else { return }
-    
-    let availableWidth = collectionView.bounds.inset(by: collectionView.layoutMargins).width
-    let maxNumColumns = availableWidth / ViewTrait.minColumnWidth
-    let cellWidth = (availableWidth / maxNumColumns).rounded(.down)
-    
-    self.itemSize = CGSize(width: cellWidth, height: ViewTrait.cellHeight)
-    self.sectionInsetReference = .fromSafeArea
+    self.itemSize = CGSize(width: ViewTrait.cellWidth, height: ViewTrait.cellHeight)
+    self.sectionInset = UIEdgeInsets(top: 5, left: 0, bottom: 5, right: 0)
   }
 }
