@@ -24,8 +24,9 @@ final class MainView: UIView {
   private var pressureLabel: UILabel!
   private var segmentControl: UISegmentedControl!
   private var tableView: UITableView!
+  private var collectionView: UICollectionView!
   
-  private var todayData: WeatherModel!
+  private var todayData: [Detail]!
   private var weatherData: WeatherModel!
   
   private enum ViewTrait {
@@ -34,7 +35,7 @@ final class MainView: UIView {
   
   required init() {
     super.init(frame: .zero)
-
+    
     setupUI()
   }
   
@@ -44,17 +45,17 @@ final class MainView: UIView {
   
   func updateWeatherData(_ weather: WeatherModel) {
     weatherData = weather
-        tableView.reloadData()
+    tableView.reloadData()
     cityNameLabel.text = weather.city.name
     let temp = Int(weather.weatherList.first!.tempInfo.temp)
     temperatureLabel.text = "\(temp)℃"
-
+    
     guard let image = weather.weatherList.first?.weather.first?.icon else {
       return
     }
     descriptionImageView.downloadImage(name: image, downloadFinishedHandler: {
     })
-
+    
     descriptionLabel.text = "\(weather.weatherList.first!.weather.first!.description)"
     humidityLabel.text = "\(weather.weatherList.first!.tempInfo.humidity)%"
     windLabel.text = "\(weather.weatherList.first!.wind.speed)m/s"
@@ -63,20 +64,30 @@ final class MainView: UIView {
   
   func filterTodayWeatherData() {
     let calendar = Calendar.current
-       let weekOfYear = calendar.component(.weekOfYear, from: Date.init(timeIntervalSinceNow: 0))
+    let weekOfYear = calendar.component(.weekday, from: Date())
     
-//    let todayForcast = weatherData.weatherList.filter({ _ in weatherData.weatherList.first?.date == weekOfYear })
+    guard weatherData != nil else {
+      return
+    }
+    
+    var todayForecast: [Detail] = []
+    for element in weatherData.weatherList {
 
+      let weekOfYearForElement = calendar.component(.weekday, from: element.date)
+
+      if weekOfYearForElement == weekOfYear {
+        todayForecast.append(element)
+
+      }
+        todayData = todayForecast
+      
+//      todayForecast = weatherData.weatherList.filter { (element) -> Bool in
+//        let weekDayForElement = calendar.component(.weekday, from: element.date)
+//
+//       return weekDayForElement == weekOfYear
+      }
+    }
   }
- 
-//  private let searchBar: UISearchBar = {
-//    let searchBar = UISearchBar()
-//    searchBar.searchBarStyle = UISearchBar.Style.default
-//    searchBar.placeholder = "Search by city name"
-//    searchBar.isTranslucent = false
-//    return searchBar
-//  }()
-}
 
 
 //MARK: - Private Zone
@@ -84,7 +95,7 @@ private extension MainView {
   
   func setupUI() {
     backgroundColor = .white
-  
+    
     //    UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.blue]
     setupCityName()
     setupContainer()
@@ -99,6 +110,7 @@ private extension MainView {
     setupPressureLabel()
     setupSegmentControl()
     setupTableView()
+    setupCollectionView()
     
     addSubviews()
     setupConstraints()
@@ -171,10 +183,11 @@ private extension MainView {
   @objc func indexChanged(_ sender: UISegmentedControl) {
     switch sender.selectedSegmentIndex{
     case 0:
-      
-      print("Today");
+      tableView.isHidden = false
+      collectionView.isHidden = true
     case 1:
-      print("Next days")
+      tableView.isHidden = true
+      collectionView.isHidden = false
     default:
       break
     }
@@ -184,13 +197,21 @@ private extension MainView {
     tableView = UITableView()
     tableView.register(WeatherCell.self, forCellReuseIdentifier: WeatherCell.identifier)
     tableView.dataSource = self
-    
   }
   
-  
-//  func filterCityByName(typedWord: String, myCities: [CityModel]) -> [CityModel] {
-//    return myCities.filter { $0.name.contains(typedWord) }
-//  }
+  func setupCollectionView() {
+    let layout = HourForecastViewLayout()
+    layout.scrollDirection = .horizontal
+    layout.scrollDirection = .vertical
+    collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+    collectionView.register(WeatherForecastForFiveDaysCell.self, forCellWithReuseIdentifier: WeatherForecastForFiveDaysCell.identifier)
+    collectionView.backgroundColor = .red
+    collectionView.dataSource = self
+  }
+
+  //  func filterCityByName(typedWord: String, myCities: [CityModel]) -> [CityModel] {
+  //    return myCities.filter { $0.name.contains(typedWord) }
+  //  }
 }
 
 
@@ -198,18 +219,39 @@ private extension MainView {
 extension MainView: UITableViewDataSource {
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    if weatherData == nil {
+    filterTodayWeatherData()
+    if todayData == nil {
       return 0
     } else {
-      return weatherData.weatherList.count
+      return todayData.count //weatherData.weatherList.count
     }
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: WeatherCell.identifier, for: indexPath) as! WeatherCell
-    let data = weatherData.weatherList[indexPath.row]
+    let data = todayData[indexPath.row] //weatherData.weatherList[indexPath.row]
     cell.bindCell(data)
     
+    return cell
+  }
+}
+
+
+// MARK: - UICollectionViewDataSource
+extension MainView: UICollectionViewDataSource {
+  
+  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    4
+//    guard let forecastData = forecastData else {
+//      return 0
+//    }
+//    return forecastData.weatherList.count
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WeatherForecastForFiveDaysCell.identifier, for: indexPath) as! WeatherForecastForFiveDaysCell
+//    let currentHourForecast = forecastData!.weatherList[indexPath.row]
+//    cell.updateUI(by: currentHourForecast)
     return cell
   }
 }
@@ -243,6 +285,7 @@ private extension MainView {
     containerView.addSubviewWC(pressureLabel)
     addSubviewWC(segmentControl)
     addSubviewWC(tableView)
+    addSubviewWC(collectionView)
   }
   
   func setupConstraints() {
@@ -295,11 +338,16 @@ private extension MainView {
       segmentControl.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
       segmentControl.heightAnchor.constraint(equalToConstant: 30),
       
+      collectionView.topAnchor.constraint(equalTo: segmentControl.bottomAnchor, constant: 5),
+      collectionView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
+      collectionView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
+      collectionView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
+      
       tableView.topAnchor.constraint(equalTo: segmentControl.bottomAnchor, constant: 5),
       tableView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
       tableView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
-      tableView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
-      
+      tableView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
+  
     ])
   }
 }

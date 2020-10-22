@@ -9,7 +9,7 @@
 import Foundation
 
 struct WeatherModel: Decodable {
-  let weatherList: [List]
+  let weatherList: [Detail]
   let city: City
   
   private enum CodingKeys: String, CodingKey {
@@ -22,7 +22,7 @@ struct City: Decodable {
   let name: String
 }
 
-struct List: Decodable {
+struct Detail: Decodable {
   let date: Date
   let tempInfo: TempInfo
   let wind: Wind

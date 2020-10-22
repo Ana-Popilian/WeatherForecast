@@ -29,7 +29,7 @@ final class WeatherCell: UITableViewCell, Identifiable {
     fatalError("init(coder:) has not been implemented")
   }
   
-  func bindCell(_ data: List) {
+  func bindCell(_ data: Detail) {
     
     hourLabel.text = data.date.asString(style: .full)
     

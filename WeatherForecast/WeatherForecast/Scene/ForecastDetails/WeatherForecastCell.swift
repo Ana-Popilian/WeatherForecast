@@ -31,7 +31,7 @@ final class WeatherForecastForFiveDaysCell: UICollectionViewCell, Identifiable {
     fatalError("init(coder:) has not been implemented")
   }
   
-  func updateUI(by hourForecast: List) {
+  func updateUI(by hourForecast: Detail) {
     
     hourLabel.text = hourForecast.date.asString(style: .long)
     temperatureLabel.text = String(hourForecast.tempInfo.temp)
