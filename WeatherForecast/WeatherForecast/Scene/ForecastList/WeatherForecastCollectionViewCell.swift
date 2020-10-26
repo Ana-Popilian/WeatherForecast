@@ -16,25 +16,27 @@ final class WeatherForecastForFiveDaysCell: UICollectionViewCell, Identifiable {
   
   private enum ViewTrait {
     static let cornerRadius: CGFloat = 15
-    static let defaultVerticalSpacing: CGFloat = 10
+    static let defaultVerticalSpacing: CGFloat = 5
+    static let imageSize: CGFloat = 40
   }
   
   override init(frame: CGRect) {
     super.init(frame: frame)
     self.backgroundColor = ColorHelper.customGreen
     layer.cornerRadius = ViewTrait.cornerRadius
-    setupUI()
     
+    setupUI()
   }
-
+  
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
   
-  func updateUI(by hourForecast: Detail) {
+  func bindCell(by hourForecast: Detail) {
     
-    hourLabel.text = hourForecast.date.asString(style: .long)
-    temperatureLabel.text = String(hourForecast.tempInfo.temp)
+    hourLabel.text = hourForecast.date.asString(style: .full)
+    let temp = Int(hourForecast.tempInfo.temp)
+    temperatureLabel.text = "\(temp)℃"
     
     guard let image = hourForecast.weather.first?.icon else {
       return
@@ -50,7 +52,7 @@ private extension WeatherForecastForFiveDaysCell {
   
   func setupUI() {
     setupHourLabel()
-    sestupForecastImage()
+    setupForecastImage()
     setupTemperatureLabel()
     
     addSubviews()
@@ -58,18 +60,17 @@ private extension WeatherForecastForFiveDaysCell {
   }
   
   func setupHourLabel() {
-    let font = UIFont.systemFont(ofSize: 14)
-    hourLabel = UILabel(text: "10:00", font: font, textAlignment: .natural, textColor: .black)
+    let font = UIFont.systemFont(ofSize: 13)
+    hourLabel = UILabel(font: font, textAlignment: .natural, textColor: .black)
   }
   
-  func sestupForecastImage() {
-    let image = UIImage(named: "img_wind")!
-    forecastImage = UIImageView(image: image)
+  func setupForecastImage() {
+    forecastImage = UIImageView()
   }
   
   func setupTemperatureLabel() {
-    let font = UIFont.systemFont(ofSize: 14)
-    temperatureLabel = UILabel(text: "13℃", font: font, textAlignment: .natural, textColor: .black)
+    let font = UIFont.systemFont(ofSize: 13)
+    temperatureLabel = UILabel(font: font, textAlignment: .natural, textColor: .black)
   }
 }
 
@@ -86,17 +87,17 @@ private extension WeatherForecastForFiveDaysCell {
   func setupConstraints() {
     NSLayoutConstraint.activate([
       
-      hourLabel.topAnchor.constraint(equalTo: topAnchor, constant: 5),
-      hourLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
+      hourLabel.topAnchor.constraint(equalTo: topAnchor, constant: ViewTrait.defaultVerticalSpacing),
+      hourLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: ViewTrait.defaultVerticalSpacing),
       
       forecastImage.centerYAnchor.constraint(equalTo: centerYAnchor),
       forecastImage.centerXAnchor.constraint(equalTo: hourLabel.centerXAnchor),
-      forecastImage.widthAnchor.constraint(equalToConstant: 20),
-      forecastImage.heightAnchor.constraint(equalToConstant: 20),
-
-      temperatureLabel.topAnchor.constraint(equalTo: forecastImage.bottomAnchor, constant: 5),
+      forecastImage.widthAnchor.constraint(equalToConstant: ViewTrait.imageSize),
+      forecastImage.heightAnchor.constraint(equalToConstant: ViewTrait.imageSize),
+      
+      temperatureLabel.topAnchor.constraint(equalTo: forecastImage.bottomAnchor, constant:ViewTrait.defaultVerticalSpacing),
       temperatureLabel.centerXAnchor.constraint(equalTo: hourLabel.centerXAnchor),
-      temperatureLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5)
+      temperatureLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -ViewTrait.defaultVerticalSpacing)
     ])
   }
 }

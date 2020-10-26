@@ -14,15 +14,15 @@ final class WeatherCell: UITableViewCell, Identifiable {
   private var temperatureLabel: UILabel!
   private var weatherImage: UIImageView!
   
+  private enum VT {
+    static let defaultPadding: CGFloat = 20
+    static let imageSize: CGFloat = 40
+  }
+  
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
     
     setupUI()
-  }
-  
-  private enum VT {
-    static let defaultPadding: CGFloat = 20
-    static let imageSize: CGFloat = 30
   }
   
   required init?(coder: NSCoder) {

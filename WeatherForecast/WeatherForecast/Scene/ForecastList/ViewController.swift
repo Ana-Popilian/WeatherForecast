@@ -11,14 +11,12 @@ import CoreLocation
 
 final class ViewController: UIViewController {
   private let locationManager = CLLocationManager()
-   private var latitude: Double = 0
-   private var longitude: Double = 0
+  private var latitude: Double = 0
+  private var longitude: Double = 0
   
   private var mainView: MainView!
-  private var weatherData1: WeatherModel!
+  private var weatherData: WeatherModel!
   private var networkManager = NetworkManager()
-//  private var latitude: Double!
-//  private var longitude: Double!
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -27,16 +25,13 @@ final class ViewController: UIViewController {
     view = mainView
     
     checkLocationServices()
-//    getLocation()
     getWeatherData()
-    
-    
   }
   
   func setupLocationManager() {
-     locationManager.delegate = self
-     locationManager.desiredAccuracy = kCLLocationAccuracyBest
-   }
+    locationManager.delegate = self
+    locationManager.desiredAccuracy = kCLLocationAccuracyBest
+  }
   
   func checkLocationServices() {
     if CLLocationManager.locationServicesEnabled() {
@@ -82,7 +77,7 @@ private extension ViewController {
   func showAlert() {
     let alertController = UIAlertController(title: "Location Permission is required", message: "Location access is restricted. In order to discover weather information, please share your location", preferredStyle: UIAlertController.Style.alert)
     let okAction = UIAlertAction(title: "Settings", style: .default, handler: {(cAlertAction) in
-       
+      
       UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
     })
     
@@ -99,8 +94,7 @@ extension ViewController {
   func getWeatherData() {
     getLocation()
     let appId = "9d4b20529a15bc127ff039cecd2d4793"
-//    let lat = "52.380457"
-//    let long = "4.873351"
+    
     let url = URL(string: "https://api.openweathermap.org/data/2.5/forecast?lat=\(latitude)&lon=\(longitude)&units=metric&appid=\(appId)")!
     
     networkManager.getData(of: WeatherModel.self, from: url) { (response) in
@@ -114,18 +108,18 @@ extension ViewController {
         }
         print(error.localizedDescription)
         
-      case .success(let weatherData):
-  
-          self.weatherData1 = weatherData
+      case .success(let forecastData):
+        
+        self.weatherData = forecastData
+      }
+      DispatchQueue.main.async {
+        guard self.weatherData != nil else {
+          return
         }
-        DispatchQueue.main.async {
-          guard self.weatherData1 != nil else {
-            return
-          }
-          self.mainView.updateWeatherData(self.weatherData1)
-        }
+        self.mainView.updateWeatherData(self.weatherData)
       }
     }
+  }
 }
 
 
