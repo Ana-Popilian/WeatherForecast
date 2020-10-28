@@ -11,8 +11,8 @@ import UIKit
 final class HourForecastViewLayout: UICollectionViewFlowLayout {
   
   private enum ViewTrait {
-    static let cellWidth: CGFloat = UIScreen.main.bounds.width
-    static let cellHeight: CGFloat = UIScreen.main.bounds.width * 0.25
+    static let cellWidth: CGFloat = 80 //UIScreen.main.bounds.width
+    static let cellHeight: CGFloat = 80 //UIScreen.main.bounds.width * 0.25
     static let verticalPadding: CGFloat = 10
   }
   

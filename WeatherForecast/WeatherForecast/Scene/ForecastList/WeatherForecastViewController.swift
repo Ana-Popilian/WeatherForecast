@@ -9,19 +9,19 @@
 import UIKit
 import CoreLocation
 
-final class ViewController: UIViewController {
+final class WeatherForecastViewController: UIViewController {
   private let locationManager = CLLocationManager()
   private var latitude: Double = 0
   private var longitude: Double = 0
   
-  private var mainView: MainView!
+  private var mainView: WeatherForecastView!
   private var weatherData: WeatherModel!
   private var networkManager = NetworkManager()
   
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    mainView = MainView()
+    mainView = WeatherForecastView()
     view = mainView
     
     checkLocationServices()
@@ -53,7 +53,7 @@ final class ViewController: UIViewController {
 
 
 // MARK: - Private Zone
-private extension ViewController {
+private extension WeatherForecastViewController {
   
   func checkLocationAuthorization() {
     switch CLLocationManager.authorizationStatus() {
@@ -89,7 +89,7 @@ private extension ViewController {
   }
 }
 
-extension ViewController {
+extension WeatherForecastViewController {
   
   func getWeatherData() {
     getLocation()
@@ -124,7 +124,7 @@ extension ViewController {
 
 
 // MARK: - CLLocationManagerDelegate
-extension ViewController: CLLocationManagerDelegate {
+extension WeatherForecastViewController: CLLocationManagerDelegate {
   
   func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
     checkLocationAuthorization()

@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class WeatherCell: UITableViewCell, Identifiable {
+final class TodayForecastTableViewCell: UITableViewCell, Identifiable {
   
   private var hourLabel: UILabel!
   private var temperatureLabel: UILabel!
@@ -46,7 +46,7 @@ final class WeatherCell: UITableViewCell, Identifiable {
 
 
 //MARK: - Private Zone
-private extension WeatherCell {
+private extension TodayForecastTableViewCell {
   
   func setupUI() {
     setupHourLabel()
@@ -74,7 +74,7 @@ private extension WeatherCell {
 
 
 //MARK: - Constraints Zone
-private extension WeatherCell {
+private extension TodayForecastTableViewCell {
   
   func addSubview() {
     addSubviewWC(hourLabel)

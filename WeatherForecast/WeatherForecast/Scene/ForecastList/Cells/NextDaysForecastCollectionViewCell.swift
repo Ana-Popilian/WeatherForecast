@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class WeatherForecastForFiveDaysCell: UICollectionViewCell, Identifiable {
+final class NextDaysForecastCollectionViewCell: UICollectionViewCell, Identifiable {
   
   private var hourLabel: UILabel!
   private var temperatureLabel: UILabel!
@@ -22,8 +22,7 @@ final class WeatherForecastForFiveDaysCell: UICollectionViewCell, Identifiable {
   
   override init(frame: CGRect) {
     super.init(frame: frame)
-    self.backgroundColor = ColorHelper.customGreen
-    layer.cornerRadius = ViewTrait.cornerRadius
+    backgroundColor = .yellow
     
     setupUI()
   }
@@ -33,11 +32,11 @@ final class WeatherForecastForFiveDaysCell: UICollectionViewCell, Identifiable {
   }
   
   func bindCell(by hourForecast: Detail) {
-    
+
     hourLabel.text = hourForecast.date.asString(style: .full)
     let temp = Int(hourForecast.tempInfo.temp)
     temperatureLabel.text = "\(temp)℃"
-    
+
     guard let image = hourForecast.weather.first?.icon else {
       return
     }
@@ -48,7 +47,7 @@ final class WeatherForecastForFiveDaysCell: UICollectionViewCell, Identifiable {
 
 
 // MARK: - Private Zone
-private extension WeatherForecastForFiveDaysCell {
+private extension NextDaysForecastCollectionViewCell {
   
   func setupUI() {
     setupHourLabel()
@@ -61,7 +60,7 @@ private extension WeatherForecastForFiveDaysCell {
   
   func setupHourLabel() {
     let font = UIFont.systemFont(ofSize: 13)
-    hourLabel = UILabel(font: font, textAlignment: .natural, textColor: .black)
+    hourLabel = UILabel(text: "06:00", font: font, textAlignment: .natural, textColor: .black)
   }
   
   func setupForecastImage() {
@@ -70,13 +69,13 @@ private extension WeatherForecastForFiveDaysCell {
   
   func setupTemperatureLabel() {
     let font = UIFont.systemFont(ofSize: 13)
-    temperatureLabel = UILabel(font: font, textAlignment: .natural, textColor: .black)
+    temperatureLabel = UILabel(text: "13℃", font: font, textAlignment: .natural, textColor: .black)
   }
 }
 
 
 //MARK: - Constraints Zone
-private extension WeatherForecastForFiveDaysCell {
+private extension NextDaysForecastCollectionViewCell {
   
   func addSubviews() {
     addSubviewWC(hourLabel)

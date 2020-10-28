@@ -7,12 +7,12 @@
 
 import UIKit
 
-final class MainView: UIView {
+final class WeatherForecastView: UIView {
   
   private var topView: TopWeatherView!
   private var segmentControl: UISegmentedControl!
-  private var tableView: UITableView!
-  private var collectionView: UICollectionView!
+  private var todayForecastTableView: UITableView!
+  private var nextDaysForecastTableView: UITableView!
   
   private var todayData: [Detail]!
   private var nextDaysData: [Detail]!
@@ -38,9 +38,9 @@ final class MainView: UIView {
   func updateWeatherData(_ weather: WeatherModel) {
     weatherData = weather
     filteNextDaysWeatherData()
-    collectionView.reloadData()
+    nextDaysForecastTableView.reloadData()
     filterTodayWeatherData()
-    tableView.reloadData()
+    todayForecastTableView.reloadData()
     topView.cityNameLabel.text = weather.city.name
     let temp = Int(weather.weatherList.first!.tempInfo.temp)
     topView.temperatureLabel.text = "\(temp)℃"
@@ -93,14 +93,14 @@ final class MainView: UIView {
 
 
 //MARK: - Private Zone
-private extension MainView {
+private extension WeatherForecastView {
   
   func setupUI() {
     backgroundColor = .white
     setupTopView()
     setupSegmentControl()
     setupTableView()
-    setupCollectionView()
+    setupNextDaysForecastTableView()
     
     addSubviews()
     setupConstraints()
@@ -123,81 +123,76 @@ private extension MainView {
   @objc func indexChanged(_ sender: UISegmentedControl) {
     switch sender.selectedSegmentIndex{
     case 0:
-      tableView.isHidden = false
-      collectionView.isHidden = true
+      todayForecastTableView.isHidden = false
+      nextDaysForecastTableView.isHidden = true
     case 1:
-      tableView.isHidden = true
-      collectionView.isHidden = false
+      nextDaysForecastTableView.reloadData()
+      todayForecastTableView.isHidden = true
+      nextDaysForecastTableView.isHidden = false
     default:
       break
     }
   }
   
   func setupTableView() {
-    tableView = UITableView()
-    tableView.register(WeatherCell.self, forCellReuseIdentifier: WeatherCell.identifier)
-    tableView.dataSource = self
+    todayForecastTableView = UITableView()
+    todayForecastTableView.register(TodayForecastTableViewCell.self, forCellReuseIdentifier: TodayForecastTableViewCell.identifier)
+    todayForecastTableView.dataSource = self
   }
   
-  func setupCollectionView() {
-    let layout = HourForecastViewLayout()
-    layout.scrollDirection = .horizontal
-    layout.scrollDirection = .vertical
-    collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-    collectionView.register(WeatherForecastForFiveDaysCell.self, forCellWithReuseIdentifier: WeatherForecastForFiveDaysCell.identifier)
-    collectionView.backgroundColor = .white
-    collectionView.dataSource = self
+  func setupNextDaysForecastTableView() {
+    nextDaysForecastTableView = UITableView()
+    nextDaysForecastTableView.register(NextDaysForecastTableViewCell.self, forCellReuseIdentifier: NextDaysForecastTableViewCell.identifier)
+//    nextDaysForecastTableView.separatorStyle = .none
+    nextDaysForecastTableView.rowHeight = 120
+    nextDaysForecastTableView.dataSource = self
   }
 }
 
 
 // MARK: - UITableViewDataSource
-extension MainView: UITableViewDataSource {
+extension WeatherForecastView: UITableViewDataSource {
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    guard todayData != nil else {
+    guard (todayData != nil), nextDaysData != nil else {
       return 0
     }
-    return todayData.count
+    //    return todayData.count
+    if tableView == todayForecastTableView {
+      return todayData.count
+    } else {
+//      return nextDaysData.count
+      return 4
+    }
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: WeatherCell.identifier, for: indexPath) as! WeatherCell
-    let data = todayData[indexPath.row]
-    cell.bindCell(data)
-    
-    return cell
-  }
-}
-
-
-// MARK: - UICollectionViewDataSource
-extension MainView: UICollectionViewDataSource {
-  
-  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    guard nextDaysData != nil else {
-      return 0
+    if tableView == todayForecastTableView {
+      let cell = tableView.dequeueReusableCell(withIdentifier: TodayForecastTableViewCell.identifier, for: indexPath) as! TodayForecastTableViewCell
+      let data = todayData[indexPath.row]
+      cell.bindCell(data)
+      
+      return cell
+      
+    } else {
+      let cell = tableView.dequeueReusableCell(withIdentifier: NextDaysForecastTableViewCell.identifier, for: indexPath) as! NextDaysForecastTableViewCell
+//      let data = nextDaysData[indexPath.row]
+//      cell.bindCell(by: data)
+      
+      return cell
     }
-    return nextDaysData.count
-  }
-  
-  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WeatherForecastForFiveDaysCell.identifier, for: indexPath) as! WeatherForecastForFiveDaysCell
-    let hourForecast = nextDaysData[indexPath.row]
-    cell.bindCell(by: hourForecast)
-    return cell
   }
 }
 
 
 //MARK: - Constraints Zone
-private extension MainView {
+private extension WeatherForecastView {
   
   func addSubviews() {
     addSubviewWC(topView)
     addSubviewWC(segmentControl)
-    addSubviewWC(collectionView)
-    addSubviewWC(tableView)
+    addSubviewWC(nextDaysForecastTableView)
+    addSubviewWC(todayForecastTableView)
   }
   
   func setupConstraints() {
@@ -212,15 +207,15 @@ private extension MainView {
       segmentControl.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -ViewTrait.horizontalSpacing),
       segmentControl.heightAnchor.constraint(equalToConstant: ViewTrait.segmentHeight),
       
-      collectionView.topAnchor.constraint(equalTo: segmentControl.bottomAnchor, constant: ViewTrait.verticalSpacing),
-      collectionView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
-      collectionView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
-      collectionView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
+      nextDaysForecastTableView.topAnchor.constraint(equalTo: segmentControl.bottomAnchor, constant: ViewTrait.verticalSpacing),
+      nextDaysForecastTableView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
+      nextDaysForecastTableView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
+      nextDaysForecastTableView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
       
-      tableView.topAnchor.constraint(equalTo: segmentControl.bottomAnchor, constant: ViewTrait.verticalSpacing),
-      tableView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
-      tableView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
-      tableView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
+      todayForecastTableView.topAnchor.constraint(equalTo: segmentControl.bottomAnchor, constant: ViewTrait.verticalSpacing),
+      todayForecastTableView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
+      todayForecastTableView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
+      todayForecastTableView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
     ])
   }
 }
