@@ -10,23 +10,23 @@
 import UIKit
 
 extension UIImageView {
-  
-  func downloadImage( name: String, downloadFinishedHandler: (() -> Void)? = nil) {
     
-    let networkManager = ParserService()
-    networkManager.fetchImage(imageName: name, completion: { data in
-      guard let data = data else {
-        DispatchQueue.main.async {
-          downloadFinishedHandler?()
-        }
-        return
-      }
-      
-      let image = UIImage(data: data)
-      DispatchQueue.main.async {
-        self.image = image
-        downloadFinishedHandler?()
-      }
-    })
-  }
+    func downloadImage( name: String, downloadFinishedHandler: (() -> Void)? = nil) {
+        
+        let networkManager = ParserService()
+        networkManager.fetchImage(imageName: name, completion: { data in
+            guard let data = data else {
+                DispatchQueue.main.async {
+                    downloadFinishedHandler?()
+                }
+                return
+            }
+            
+            let image = UIImage(data: data)
+            DispatchQueue.main.async {
+                self.image = image
+                downloadFinishedHandler?()
+            }
+        })
+    }
 }

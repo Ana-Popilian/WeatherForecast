@@ -143,8 +143,8 @@ private extension WeatherForecastView {
   func setupNextDaysForecastTableView() {
     nextDaysForecastTableView = UITableView()
     nextDaysForecastTableView.register(NextDaysForecastTableViewCell.self, forCellReuseIdentifier: NextDaysForecastTableViewCell.identifier)
-//    nextDaysForecastTableView.separatorStyle = .none
-    nextDaysForecastTableView.rowHeight = 120
+    nextDaysForecastTableView.separatorStyle = .none
+    nextDaysForecastTableView.rowHeight = 140
     nextDaysForecastTableView.dataSource = self
   }
 }
@@ -175,6 +175,7 @@ extension WeatherForecastView: UITableViewDataSource {
       return cell
       
     } else {
+        
       let cell = tableView.dequeueReusableCell(withIdentifier: NextDaysForecastTableViewCell.identifier, for: indexPath) as! NextDaysForecastTableViewCell
 //      let data = nextDaysData[indexPath.row]
 //      cell.bindCell(by: data)

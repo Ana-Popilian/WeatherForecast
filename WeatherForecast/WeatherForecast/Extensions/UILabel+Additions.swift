@@ -9,12 +9,12 @@
 import UIKit
 
 extension UILabel {
-  
-  convenience init(text: String? = nil, font: UIFont, textAlignment: NSTextAlignment, textColor: UIColor) {
-    self.init()
-    self.text = text
-    self.textColor = textColor
-    self.font = font
-    self.textAlignment = textAlignment
-  }
+    
+    convenience init(text: String? = nil, font: UIFont, textAlignment: NSTextAlignment, textColor: UIColor) {
+        self.init()
+        self.text = text
+        self.textColor = textColor
+        self.font = font
+        self.textAlignment = textAlignment
+    }
 }

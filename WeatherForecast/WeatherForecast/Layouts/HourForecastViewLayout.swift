@@ -21,5 +21,6 @@ final class HourForecastViewLayout: UICollectionViewFlowLayout {
     
     self.itemSize = CGSize(width: ViewTrait.cellWidth, height: ViewTrait.cellHeight)
     self.sectionInset = UIEdgeInsets(top: 5, left: 0, bottom: 5, right: 0)
+    self.scrollDirection = .horizontal
   }
 }

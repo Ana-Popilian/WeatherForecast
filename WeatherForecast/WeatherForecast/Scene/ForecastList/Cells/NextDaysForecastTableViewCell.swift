@@ -47,7 +47,6 @@ private extension NextDaysForecastTableViewCell {
   
   func setupCollectionView() {
     let layout = HourForecastViewLayout()
-    layout.scrollDirection = .horizontal
     collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
     collectionView.register(NextDaysForecastCollectionViewCell.self, forCellWithReuseIdentifier: NextDaysForecastCollectionViewCell.identifier)
     collectionView.showsVerticalScrollIndicator = false
@@ -78,8 +77,8 @@ extension NextDaysForecastTableViewCell: UICollectionViewDataSource {
 private extension NextDaysForecastTableViewCell {
   
   func addSubViews() {
-    addSubviewWC(dateLabel)
-    addSubviewWC(collectionView)
+    self.contentView.addSubviewWC(dateLabel)
+    self.contentView.addSubviewWC(collectionView)
   }
   
   func setupConstraints() {
