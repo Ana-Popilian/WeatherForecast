@@ -22,7 +22,8 @@ final class NextDaysForecastCollectionViewCell: UICollectionViewCell, Identifiab
   
   override init(frame: CGRect) {
     super.init(frame: frame)
-    backgroundColor = .yellow
+    layer.cornerRadius = 15
+    backgroundColor = ColorHelper.customGreen
     
     setupUI()
   }
@@ -64,7 +65,8 @@ private extension NextDaysForecastCollectionViewCell {
   }
   
   func setupForecastImage() {
-    forecastImage = UIImageView()
+   let image = UIImage(named: "AppIcon")!
+    forecastImage = UIImageView(image: image)
   }
   
   func setupTemperatureLabel() {
@@ -87,15 +89,15 @@ private extension NextDaysForecastCollectionViewCell {
     NSLayoutConstraint.activate([
       
       hourLabel.topAnchor.constraint(equalTo: topAnchor, constant: ViewTrait.defaultVerticalSpacing),
-      hourLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: ViewTrait.defaultVerticalSpacing),
+      hourLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
       
       forecastImage.centerYAnchor.constraint(equalTo: centerYAnchor),
-      forecastImage.centerXAnchor.constraint(equalTo: hourLabel.centerXAnchor),
+      forecastImage.centerXAnchor.constraint(equalTo: centerXAnchor),
       forecastImage.widthAnchor.constraint(equalToConstant: ViewTrait.imageSize),
       forecastImage.heightAnchor.constraint(equalToConstant: ViewTrait.imageSize),
       
       temperatureLabel.topAnchor.constraint(equalTo: forecastImage.bottomAnchor, constant:ViewTrait.defaultVerticalSpacing),
-      temperatureLabel.centerXAnchor.constraint(equalTo: hourLabel.centerXAnchor),
+      temperatureLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
       temperatureLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -ViewTrait.defaultVerticalSpacing)
     ])
   }

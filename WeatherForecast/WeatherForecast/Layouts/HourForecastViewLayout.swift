@@ -11,8 +11,8 @@ import UIKit
 final class HourForecastViewLayout: UICollectionViewFlowLayout {
   
   private enum ViewTrait {
-    static let cellWidth: CGFloat = 80 //UIScreen.main.bounds.width
-    static let cellHeight: CGFloat = 80 //UIScreen.main.bounds.width * 0.25
+    static let cellWidth: CGFloat = 90 //UIScreen.main.bounds.width
+    static let cellHeight: CGFloat = 90 //UIScreen.main.bounds.width * 0.25
     static let verticalPadding: CGFloat = 10
   }
   
@@ -20,7 +20,7 @@ final class HourForecastViewLayout: UICollectionViewFlowLayout {
     super.prepare()
     
     self.itemSize = CGSize(width: ViewTrait.cellWidth, height: ViewTrait.cellHeight)
-    self.sectionInset = UIEdgeInsets(top: 5, left: 0, bottom: 5, right: 0)
+    self.sectionInset = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
     self.scrollDirection = .horizontal
   }
 }

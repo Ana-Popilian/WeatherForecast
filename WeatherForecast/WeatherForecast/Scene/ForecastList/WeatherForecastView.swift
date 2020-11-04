@@ -37,7 +37,7 @@ final class WeatherForecastView: UIView {
   
   func updateWeatherData(_ weather: WeatherModel) {
     weatherData = weather
-    filteNextDaysWeatherData()
+    filterNextDaysWeatherData()
     nextDaysForecastTableView.reloadData()
     filterTodayWeatherData()
     todayForecastTableView.reloadData()
@@ -45,6 +45,7 @@ final class WeatherForecastView: UIView {
     let temp = Int(weather.weatherList.first!.tempInfo.temp)
     topView.temperatureLabel.text = "\(temp)℃"
     
+    groupWeatherData()
     guard let image = weather.weatherList.first?.weather.first?.icon else {
       return
     }
@@ -74,14 +75,14 @@ final class WeatherForecastView: UIView {
     todayData = todayForecast
   }
   
-  func filteNextDaysWeatherData() {
+  func filterNextDaysWeatherData() {
     let calendar = Calendar.current
     let weekDay = calendar.component(.weekday, from: Date())
     
     guard weatherData != nil else {
       return
     }
-    
+         
     var nextDaysForecast: [Detail] = []
     nextDaysForecast = weatherData.weatherList.filter { (element) -> Bool in
       let weekDayForElement = calendar.component(.weekday, from: element.date)
@@ -89,6 +90,21 @@ final class WeatherForecastView: UIView {
     }
     nextDaysData = nextDaysForecast
   }
+    
+    func groupWeatherData()  {
+        let calendar = Calendar.current
+        
+        let groupedForecast = Dictionary(grouping: nextDaysData, by: {
+            calendar.ordinality(of: .day, in: .year, for: $0.date)!
+        })
+        
+        let orderedKeys = groupedForecast.keys.sorted { $0 < $1 }
+        
+        var groupArrayOrdered = [[Detail]]()
+        for key in orderedKeys {
+            groupArrayOrdered.append(groupedForecast[key]!)
+        }
+    }
 }
 
 
@@ -137,6 +153,7 @@ private extension WeatherForecastView {
   func setupTableView() {
     todayForecastTableView = UITableView()
     todayForecastTableView.register(TodayForecastTableViewCell.self, forCellReuseIdentifier: TodayForecastTableViewCell.identifier)
+    todayForecastTableView.separatorStyle = .none
     todayForecastTableView.dataSource = self
   }
   
@@ -178,7 +195,7 @@ extension WeatherForecastView: UITableViewDataSource {
         
       let cell = tableView.dequeueReusableCell(withIdentifier: NextDaysForecastTableViewCell.identifier, for: indexPath) as! NextDaysForecastTableViewCell
 //      let data = nextDaysData[indexPath.row]
-//      cell.bindCell(by: data)
+//      cell.bindData(by: data)
       
       return cell
     }
