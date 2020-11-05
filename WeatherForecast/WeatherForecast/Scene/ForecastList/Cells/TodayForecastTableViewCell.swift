@@ -31,7 +31,7 @@ final class TodayForecastTableViewCell: UITableViewCell, Identifiable {
   
   func bindCell(_ data: Detail) {
     
-    hourLabel.text = data.date.asString(style: .full)
+    hourLabel.text = data.date.asString(style: .short)
     
     let temp = Int(data.tempInfo.temp)
     temperatureLabel.text = "\(temp)℃"

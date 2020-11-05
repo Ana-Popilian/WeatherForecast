@@ -33,7 +33,7 @@ final class NextDaysForecastCollectionViewCell: UICollectionViewCell, Identifiab
   }
   
   func bindCell(by hourForecast: Detail) {
-
+    
     hourLabel.text = hourForecast.date.asString(style: .full)
     let temp = Int(hourForecast.tempInfo.temp)
     temperatureLabel.text = "\(temp)℃"

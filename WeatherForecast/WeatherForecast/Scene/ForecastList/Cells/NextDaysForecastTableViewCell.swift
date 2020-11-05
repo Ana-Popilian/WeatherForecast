@@ -26,8 +26,11 @@ final class NextDaysForecastTableViewCell: UITableViewCell, Identifiable {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func bindData(by forecastData: Detail) {
-        nextDaysWeatherData = [forecastData]
+    func bindData(by forecastData: [Detail]) {
+        collectionView.reloadData()
+        
+        dateLabel.text = forecastData.first?.date.asLongerString() 
+        nextDaysWeatherData = forecastData
     }
 }
 
@@ -63,14 +66,14 @@ private extension NextDaysForecastTableViewCell {
 extension NextDaysForecastTableViewCell: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        8
+        return nextDaysWeatherData.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NextDaysForecastCollectionViewCell.identifier, for: indexPath) as! NextDaysForecastCollectionViewCell
-        let nextDaysData : [Detail] = []
-        //        let hourForecast = nextDaysWeatherData[indexPath.row]
-        //        cell.bindCell(by: hourForecast)
+        
+        let hourForecast = nextDaysWeatherData[indexPath.row]
+        cell.bindCell(by: hourForecast)
         return cell
     }
 }
