@@ -9,167 +9,159 @@
 import UIKit
 
 final class TopWeatherView: UIView {
-  
-  var cityNameLabel: UILabel!
-  var containerView: UIView!
-  var temperatureLabel: UILabel!
-  var descriptionImageView: UIImageView!
-  var descriptionLabel: UILabel!
-  var humidityImageView: UIImageView!
-  var humidityLabel: UILabel!
-  var windImageView: UIImageView!
-  var windLabel: UILabel!
-  var pressureImageView: UIImageView!
-  var pressureLabel: UILabel!
-  
-  required init() {
-    super.init(frame: .zero)
     
-    setupUI()
+    var cityNameLabel: UILabel!
+    var containerView: UIView!
+    var temperatureLabel: UILabel!
+    var descriptionImageView: UIImageView!
+    var descriptionLabel: UILabel!
+    var humidityImageView: UIImageView!
+    var humidityLabel: UILabel!
+    var windImageView: UIImageView!
+    var windLabel: UILabel!
+    var pressureImageView: UIImageView!
+    var pressureLabel: UILabel!
+    var sunriseLabel: UILabel!
+    var sunsetLabel: UILabel!
     
-    addSubViews()
-    setupConstraints()
-  }
-  
-  required init?(coder aDecoder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
+    private enum VT {
+        static let verticalSpacing: CGFloat = 10
+        static let containerVerticalPadding: CGFloat = 25
+        static let horizontalPadding: CGFloat = 50
+        static let imageSize: CGFloat = 40
+    }
+    
+    required init() {
+        super.init(frame: .zero)
+        
+        setupUI()
+        
+        addSubViews()
+        setupConstraints()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
 
 
 // MARK: - Private Zone
 private extension TopWeatherView {
-  
-  func setupUI() {
-    setupCityName()
-    setupContainer()
-    setupTemperatureLabel()
-    setupDescriptionImageView()
-    setupDescriptionLabel()
-    setupHumidityImageView()
-    setupHumidityLabel()
-    setupWindImageView()
-    setupWindLabel()
-    setupPressureImageView()
-    setupPressureLabel()
     
-  }
-  
-  func setupCityName() {
-    let font = UIFont.systemFont(ofSize: 20)
-    cityNameLabel = UILabel(font: font, textAlignment: .center, textColor: .black)
-  }
-  
-  func setupContainer() {
-    containerView = UIView()
-  }
-  
-  func setupTemperatureLabel() {
-    let font = UIFont.systemFont(ofSize: 20)
-    temperatureLabel = UILabel(font: font, textAlignment: .left, textColor: .black)
-  }
-  
-  func setupDescriptionImageView() {
-    descriptionImageView = UIImageView()
-  }
-  
-  func setupDescriptionLabel() {
-    let font = UIFont.systemFont(ofSize: 14)
-    descriptionLabel = UILabel(font: font, textAlignment: .center, textColor: .black)
-  }
-  
-  func setupHumidityImageView() {
-    let image = UIImage(named: "img_humidity")!
-    humidityImageView = UIImageView(image: image)
-  }
-  
-  func setupHumidityLabel() {
-    let font = UIFont.systemFont(ofSize: 14)
-    humidityLabel = UILabel(font: font, textAlignment: .center, textColor: .black)
-  }
-  
-  func setupWindImageView() {
-    let image = UIImage(named: "img_wind")!
-    windImageView = UIImageView(image: image)
-  }
-  
-  func setupWindLabel() {
-    let font = UIFont.systemFont(ofSize: 14)
-    windLabel = UILabel(font: font, textAlignment: .center, textColor: .black)
-  }
-  
-  func setupPressureImageView() {
-    let image = UIImage(named: "img_pressure")!
-    pressureImageView = UIImageView(image: image)
-  }
-  
-  func setupPressureLabel() {
-    let font = UIFont.systemFont(ofSize: 14)
-    pressureLabel = UILabel(font: font, textAlignment: .center, textColor: .black)
-  }
+    func setupUI() {
+        setupCityName()
+        setupContainer()
+        setupTemperatureLabel()
+        setupDescriptionImageView()
+        setupDescriptionLabel()
+        setupHumidityLabel()
+        setupWindLabel()
+        setupPressureLabel()
+        setupSunriseLabel()
+        setupSunsetLabel()
+    }
+    
+    func setupCityName() {
+        let font = UIFont.systemFont(ofSize: 20)
+        cityNameLabel = UILabel(font: font, textAlignment: .center, textColor: .black)
+    }
+    
+    func setupContainer() {
+        containerView = UIView()
+    }
+    
+    func setupTemperatureLabel() {
+        let font = UIFont.systemFont(ofSize: 20)
+        temperatureLabel = UILabel(font: font, textAlignment: .left, textColor: .black)
+    }
+    
+    func setupDescriptionImageView() {
+        descriptionImageView = UIImageView()
+    }
+    
+    func setupDescriptionLabel() {
+        let font = UIFont.systemFont(ofSize: 14)
+        descriptionLabel = UILabel(font: font, textAlignment: .center, textColor: .black)
+    }
+    
+    func setupHumidityLabel() {
+        let font = UIFont.systemFont(ofSize: 14)
+        humidityLabel = UILabel(font: font, textAlignment: .center, textColor: .black)
+    }
+    
+    func setupWindLabel() {
+        let font = UIFont.systemFont(ofSize: 14)
+        windLabel = UILabel(font: font, textAlignment: .center, textColor: .black)
+    }
+    
+    func setupPressureLabel() {
+        let font = UIFont.systemFont(ofSize: 14)
+        pressureLabel = UILabel(font: font, textAlignment: .center, textColor: .black)
+    }
+    
+    func setupSunriseLabel() {
+        let font = UIFont.systemFont(ofSize: 14)
+        sunriseLabel = UILabel( font: font, textAlignment: .center, textColor: .black)
+    }
+    
+    func setupSunsetLabel() {
+        let font = UIFont.systemFont(ofSize: 14)
+        sunsetLabel = UILabel( font: font, textAlignment: .center, textColor: .black)
+    }
 }
 
 // MARK: - Constraints Zone
 private extension TopWeatherView {
-  
-  func addSubViews() {
-    addSubviewWC(cityNameLabel)
-    addSubviewWC(containerView)
-    containerView.addSubviewWC(temperatureLabel)
-    containerView.addSubviewWC(descriptionImageView)
-    containerView.addSubviewWC(descriptionLabel)
-    containerView.addSubviewWC(humidityImageView)
-    containerView.addSubviewWC(humidityLabel)
-    containerView.addSubviewWC(windImageView)
-    containerView.addSubviewWC(windLabel)
-    containerView.addSubviewWC(pressureImageView)
-    containerView.addSubviewWC(pressureLabel)
-  }
-  
-  func setupConstraints() {
-    NSLayoutConstraint.activate([
-      cityNameLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 10),
-      cityNameLabel.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor),
-      
-      containerView.topAnchor.constraint(equalTo: cityNameLabel.bottomAnchor),
-      containerView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
-      containerView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
-      
-      temperatureLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 50),
-      temperatureLabel.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
-      
-      descriptionImageView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 10),
-      descriptionImageView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
-      descriptionImageView.heightAnchor.constraint(equalToConstant: 40),
-      descriptionImageView.widthAnchor.constraint(equalToConstant: 40),
-      
-      descriptionLabel.leadingAnchor.constraint(equalTo: descriptionImageView.trailingAnchor, constant: 10),
-      descriptionLabel.centerYAnchor.constraint(equalTo: descriptionImageView.centerYAnchor),
-      
-      humidityImageView.topAnchor.constraint(equalTo: descriptionImageView.bottomAnchor, constant: 5),
-      humidityImageView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
-      humidityImageView.heightAnchor.constraint(equalToConstant: 25),
-      humidityImageView.widthAnchor.constraint(equalToConstant: 25),
-      
-      humidityLabel.leadingAnchor.constraint(equalTo: humidityImageView.trailingAnchor, constant: 20),
-      humidityLabel.centerYAnchor.constraint(equalTo: humidityImageView.centerYAnchor),
-      
-      windImageView.topAnchor.constraint(equalTo: humidityImageView.bottomAnchor, constant: 5),
-      windImageView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
-      windImageView.heightAnchor.constraint(equalToConstant: 30),
-      windImageView.widthAnchor.constraint(equalToConstant: 30),
-      
-      windLabel.leadingAnchor.constraint(equalTo: windImageView.trailingAnchor, constant: 20),
-      windLabel.centerYAnchor.constraint(equalTo: windImageView.centerYAnchor),
-      
-      pressureImageView.topAnchor.constraint(equalTo: windImageView.bottomAnchor, constant: 10),
-      pressureImageView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
-      pressureImageView.heightAnchor.constraint(equalToConstant: 25),
-      pressureImageView.widthAnchor.constraint(equalToConstant: 25),
-      
-      pressureLabel.leadingAnchor.constraint(equalTo: pressureImageView.trailingAnchor, constant: 20),
-      pressureLabel.centerYAnchor.constraint(equalTo: pressureImageView.centerYAnchor),
-      pressureLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
-    ])
-  }
+    
+    func addSubViews() {
+        addSubviewWC(cityNameLabel)
+        addSubviewWC(containerView)
+        containerView.addSubviewWC(temperatureLabel)
+        containerView.addSubviewWC(descriptionImageView)
+        containerView.addSubviewWC(descriptionLabel)
+        containerView.addSubviewWC(humidityLabel)
+        containerView.addSubviewWC(windLabel)
+        containerView.addSubviewWC(pressureLabel)
+        containerView.addSubviewWC(sunriseLabel)
+        containerView.addSubviewWC(sunsetLabel)
+    }
+    
+    func setupConstraints() {
+        NSLayoutConstraint.activate([
+            cityNameLabel.topAnchor.constraint(equalTo: topAnchor, constant: VT.verticalSpacing),
+            cityNameLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
+            
+            containerView.topAnchor.constraint(equalTo: cityNameLabel.bottomAnchor, constant: VT.containerVerticalPadding),
+            containerView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            containerView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            
+            descriptionImageView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: VT.horizontalPadding),
+            descriptionImageView.heightAnchor.constraint(equalToConstant: VT.imageSize),
+            descriptionImageView.widthAnchor.constraint(equalToConstant: VT.imageSize),
+            
+            temperatureLabel.topAnchor.constraint(equalTo: descriptionImageView.bottomAnchor),
+            temperatureLabel.centerXAnchor.constraint(equalTo: descriptionImageView.centerXAnchor),
+            temperatureLabel.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
+            
+            descriptionLabel.topAnchor.constraint(equalTo: temperatureLabel.bottomAnchor, constant: VT.verticalSpacing),
+            descriptionLabel.centerXAnchor.constraint(equalTo: descriptionImageView.centerXAnchor),
+            
+            humidityLabel.topAnchor.constraint(equalTo: containerView.topAnchor),
+            humidityLabel.leadingAnchor.constraint(equalTo: containerView.centerXAnchor),
+            
+            windLabel.topAnchor.constraint(equalTo: humidityLabel.bottomAnchor, constant: VT.verticalSpacing),
+            windLabel.leadingAnchor.constraint(equalTo: containerView.centerXAnchor),
+            
+            pressureLabel.topAnchor.constraint(equalTo: windLabel.bottomAnchor, constant: VT.verticalSpacing),
+            pressureLabel.leadingAnchor.constraint(equalTo: containerView.centerXAnchor),
+            
+            sunriseLabel.topAnchor.constraint(equalTo: pressureLabel.bottomAnchor, constant: VT.verticalSpacing),
+            sunriseLabel.leadingAnchor.constraint(equalTo: containerView.centerXAnchor),
+            
+            sunsetLabel.topAnchor.constraint(equalTo: sunriseLabel.bottomAnchor, constant: VT.verticalSpacing),
+            sunsetLabel.leadingAnchor.constraint(equalTo: containerView.centerXAnchor),
+            sunsetLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
+        ])
+    }
 }
