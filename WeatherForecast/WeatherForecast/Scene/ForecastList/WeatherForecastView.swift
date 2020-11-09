@@ -23,7 +23,7 @@ final class WeatherForecastView: UIView {
         static let heightMultiplier: CGFloat = 0.4
         static let segmentHeight: CGFloat = 30
         static let horizontalSpacing: CGFloat = 15
-        static let verticalSpacing: CGFloat = 10
+        static let verticalSpacing: CGFloat = 20
     }
     
     required init() {
@@ -54,9 +54,11 @@ final class WeatherForecastView: UIView {
         })
         
         topView.descriptionLabel.text = "\(weather.weatherList.first!.weather.first!.description)"
-        topView.humidityLabel.text = "\(weather.weatherList.first!.tempInfo.humidity)%"
-        topView.windLabel.text = "\(weather.weatherList.first!.wind.speed)m/s"
-        topView.pressureLabel.text = "\(weather.weatherList.first!.tempInfo.pressure)hPA"
+        topView.humidityLabel.text = "Humidity: \(weather.weatherList.first!.tempInfo.humidity)%"
+        topView.windLabel.text = "Wind Speed: \(weather.weatherList.first!.wind.speed)m/s"
+        topView.pressureLabel.text = "Pressure: \(weather.weatherList.first!.tempInfo.pressure)hPA"
+        topView.sunriseLabel.text = "Sunrise: \(weather.city.sunrise.asString(style: .none))"
+        topView.sunsetLabel.text = "Sunset: \(weather.city.sunset.asString(style: .none))"
     }
     
     func filterTodayWeatherData() {
@@ -155,13 +157,14 @@ private extension WeatherForecastView {
     func setupTableView() {
         todayForecastTableView = UITableView()
         todayForecastTableView.register(TodayForecastTableViewCell.self, forCellReuseIdentifier: TodayForecastTableViewCell.identifier)
-        todayForecastTableView.separatorStyle = .none
+        todayForecastTableView.backgroundColor = .white
         todayForecastTableView.dataSource = self
     }
     
     func setupNextDaysForecastTableView() {
         nextDaysForecastTableView = UITableView()
         nextDaysForecastTableView.register(NextDaysForecastTableViewCell.self, forCellReuseIdentifier: NextDaysForecastTableViewCell.identifier)
+        nextDaysForecastTableView.backgroundColor = .white
         nextDaysForecastTableView.separatorStyle = .none
         nextDaysForecastTableView.rowHeight = 140
         nextDaysForecastTableView.dataSource = self

@@ -9,18 +9,18 @@
 import UIKit
 
 final class HourForecastViewLayout: UICollectionViewFlowLayout {
-  
-  private enum ViewTrait {
-    static let cellWidth: CGFloat = 90
-    static let cellHeight: CGFloat = 90
-    static let padding: CGFloat = 10
-  }
-  
-  override func prepare() {
-    super.prepare()
     
-    self.itemSize = CGSize(width: ViewTrait.cellWidth, height: ViewTrait.cellHeight)
-    self.sectionInset = UIEdgeInsets(top: 0, left: ViewTrait.padding, bottom: 0, right: ViewTrait.padding)
-    self.scrollDirection = .horizontal
-  }
+    private enum ViewTrait {
+        static let cellWidth: CGFloat = 90
+        static let cellHeight: CGFloat = 90
+        static let padding: CGFloat = 10
+    }
+    
+    override func prepare() {
+        super.prepare()
+        
+        self.itemSize = CGSize(width: ViewTrait.cellWidth, height: ViewTrait.cellHeight)
+        self.sectionInset = UIEdgeInsets(top: 0, left: ViewTrait.padding, bottom: 0, right: ViewTrait.padding)
+        self.scrollDirection = .horizontal
+    }
 }
