@@ -10,5 +10,5 @@ import UIKit
 
 enum ColorHelper {
   
-  static let customGreen: UIColor = UIColor(named: "customGreen")!
+  static let customBlue: UIColor = UIColor(named: "customBlue")!
 }

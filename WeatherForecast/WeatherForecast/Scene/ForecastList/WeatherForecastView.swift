@@ -54,11 +54,21 @@ final class WeatherForecastView: UIView {
         })
         
         topView.descriptionLabel.text = "\(weather.weatherList.first!.weather.first!.description)"
-        topView.humidityLabel.text = "Humidity: \(weather.weatherList.first!.tempInfo.humidity)%"
-        topView.windLabel.text = "Wind Speed: \(weather.weatherList.first!.wind.speed)m/s"
-        topView.pressureLabel.text = "Pressure: \(weather.weatherList.first!.tempInfo.pressure)hPA"
-        topView.sunriseLabel.text = "Sunrise: \(weather.city.sunrise.asString(style: .none))"
-        topView.sunsetLabel.text = "Sunset: \(weather.city.sunset.asString(style: .none))"
+        
+        topView.humidityLabel.attributedText = convertToAttributedString(title: "Humidity: ", value: "\(weather.weatherList.first!.tempInfo.humidity)%")
+        topView.windLabel.attributedText = convertToAttributedString(title: "Wind Speed: ", value: "\(weather.weatherList.first!.wind.speed)m/s")
+        topView.pressureLabel.attributedText = convertToAttributedString(title: "Pressure: ", value: "\(weather.weatherList.first!.tempInfo.pressure)hPA")
+        topView.sunriseLabel.attributedText = convertToAttributedString(title: "Sunrise: ", value: "\(weather.city.sunrise.asString(style: .none))")
+        topView.sunsetLabel.attributedText = convertToAttributedString(title: "Sunset: ", value: "\(weather.city.sunset.asString(style: .none))")
+    }
+    
+    func convertToAttributedString(title: String, value: String) -> NSMutableAttributedString {
+        let titleAtt = NSMutableAttributedString(string: title)
+        let valueAtt = NSMutableAttributedString(string: value)
+        titleAtt.addAttribute(NSAttributedString.Key.foregroundColor, value: ColorHelper.customBlue, range: NSRange(location: 0, length: title.count - 1))
+
+        titleAtt.append(valueAtt)
+        return titleAtt
     }
     
     func filterTodayWeatherData() {
@@ -137,7 +147,7 @@ private extension WeatherForecastView {
         segmentControl.addTarget(self, action: #selector(indexChanged(_:)), for: .valueChanged)
         
         segmentControl.layer.cornerRadius = 5.0
-        segmentControl.backgroundColor = ColorHelper.customGreen
+        segmentControl.backgroundColor = ColorHelper.customBlue
     }
     
     @objc func indexChanged(_ sender: UISegmentedControl) {

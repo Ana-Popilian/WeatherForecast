@@ -23,7 +23,7 @@ final class NextDaysForecastCollectionViewCell: UICollectionViewCell, Identifiab
     override init(frame: CGRect) {
         super.init(frame: frame)
         layer.cornerRadius = ViewTrait.cornerRadius
-        backgroundColor = ColorHelper.customGreen
+        backgroundColor = ColorHelper.customBlue
         
         setupUI()
     }

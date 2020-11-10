@@ -27,10 +27,10 @@ final class NextDaysForecastTableViewCell: UITableViewCell, Identifiable {
     }
     
     func bindData(by forecastData: [Detail]) {
-        collectionView.reloadData()
-        
-        dateLabel.text = forecastData.first?.date.asLongerString() 
         nextDaysWeatherData = forecastData
+        collectionView.reloadData()
+        collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .centeredHorizontally, animated: false)
+        dateLabel.text = forecastData.first?.date.asLongerString()
     }
 }
 

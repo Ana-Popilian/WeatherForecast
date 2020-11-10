@@ -9,6 +9,7 @@
 import Foundation
 
 final class ParserService {
+    
     func fetchImage(imageName: String, completion: @escaping (Data?) -> ()) {
         
         let baseURl = "http://openweathermap.org/img/wn/\(imageName)@2x.png"
