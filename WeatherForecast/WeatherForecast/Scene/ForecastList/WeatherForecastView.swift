@@ -13,6 +13,7 @@ final class WeatherForecastView: UIView {
     private var segmentControl: UISegmentedControl!
     private var todayForecastTableView: UITableView!
     private var nextDaysForecastTableView: UITableView!
+    private var activityIndicator: UIActivityIndicatorView!
     
     private var todayData: [Detail]!
     private var nextDaysData: [Detail]!
@@ -38,6 +39,8 @@ final class WeatherForecastView: UIView {
     
     func updateWeatherData(_ weather: WeatherModel) {
         weatherData = weather
+        activityIndicator.stopAnimating()
+        segmentControl.isHidden = false
         filterNextDaysWeatherData()
         nextDaysForecastTableView.reloadData()
         filterTodayWeatherData()
@@ -131,6 +134,7 @@ private extension WeatherForecastView {
         setupSegmentControl()
         setupTableView()
         setupNextDaysForecastTableView()
+        setupActivityIndicator()
         
         addSubviews()
         setupConstraints()
@@ -168,6 +172,7 @@ private extension WeatherForecastView {
         todayForecastTableView = UITableView()
         todayForecastTableView.register(TodayForecastTableViewCell.self, forCellReuseIdentifier: TodayForecastTableViewCell.identifier)
         todayForecastTableView.backgroundColor = .white
+        todayForecastTableView.separatorStyle = .none
         todayForecastTableView.dataSource = self
     }
     
@@ -179,6 +184,15 @@ private extension WeatherForecastView {
         nextDaysForecastTableView.rowHeight = 140
         nextDaysForecastTableView.dataSource = self
     }
+    
+    func setupActivityIndicator() {
+        segmentControl.isHidden = true
+      activityIndicator = UIActivityIndicatorView(style: .large)
+        activityIndicator.color = ColorHelper.customBlue
+      activityIndicator.hidesWhenStopped = true
+      activityIndicator.startAnimating()
+    }
+    
 }
 
 
@@ -224,6 +238,7 @@ private extension WeatherForecastView {
         addSubviewWC(segmentControl)
         addSubviewWC(nextDaysForecastTableView)
         addSubviewWC(todayForecastTableView)
+        addSubviewWC(activityIndicator)
     }
     
     func setupConstraints() {
@@ -247,6 +262,9 @@ private extension WeatherForecastView {
             todayForecastTableView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
             todayForecastTableView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
             todayForecastTableView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
+            
+            activityIndicator.centerXAnchor.constraint(equalTo: centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
     }
 }
