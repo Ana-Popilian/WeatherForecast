@@ -25,7 +25,6 @@ final class WeatherForecastViewController: UIViewController {
         view = mainView
         
         checkLocationServices()
-        getWeatherData()
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -45,34 +44,24 @@ final class WeatherForecastViewController: UIViewController {
             showAlert()
         }
     }
-    
-    func getLocation() {
-        guard let location = locationManager.location else {
-            return
-        }
-        latitude = location.coordinate.latitude
-        longitude = location.coordinate.longitude
-    }
 }
-
 
 // MARK: - Private Zone
 private extension WeatherForecastViewController {
     
     func checkLocationAuthorization() {
         switch CLLocationManager.authorizationStatus() {
-        case .authorizedWhenInUse:
-            locationManager.startUpdatingLocation()
-            break
-        case .denied:
+        case .authorizedWhenInUse,
+             .authorizedAlways:
+            locationManager.requestLocation()
+            
+        case .denied,
+             .restricted:
             showAlert()
-            break
+            
         case .notDetermined:
             locationManager.requestWhenInUseAuthorization()
-        case .restricted:
-            break
-        case .authorizedAlways:
-            break
+            
         @unknown default:
             break
         }
@@ -89,14 +78,15 @@ private extension WeatherForecastViewController {
         alertController.addAction(cancelAction)
         alertController.addAction(okAction)
         
-        self.present(alertController, animated: true, completion: nil)
+        present(alertController, animated: true)
     }
 }
 
+
+// MARK: - WeatherForecastViewControllerExtension
 extension WeatherForecastViewController {
     
     func getWeatherData() {
-        getLocation()
         let appId = "9d4b20529a15bc127ff039cecd2d4793"
         
         let url = URL(string: "https://api.openweathermap.org/data/2.5/forecast?lat=\(latitude)&lon=\(longitude)&units=metric&appid=\(appId)")!
@@ -132,5 +122,20 @@ extension WeatherForecastViewController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         checkLocationAuthorization()
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        
+        if locations.isEmpty {
+            return
+        }
+        latitude = locations.last?.coordinate.latitude ?? 0
+        longitude = locations.last?.coordinate.longitude ?? 0
+        
+        getWeatherData()
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print(error.localizedDescription)
     }
 }
