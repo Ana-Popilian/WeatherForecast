@@ -48,7 +48,7 @@ private extension NextDaysForecastTableViewCell {
     
     func setupDateLabel() {
         let font = UIFont.systemFont(ofSize: 14)
-        dateLabel = UILabel (text: "26 oct 2020", font: font, textAlignment: .center, textColor: .black)
+        dateLabel = UILabel(font: font, textAlignment: .center, textColor: .black)
     }
     
     func setupCollectionView() {

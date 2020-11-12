@@ -86,7 +86,6 @@ private extension NextDaysForecastCollectionViewCell {
     
     func setupConstraints() {
         NSLayoutConstraint.activate([
-            
             hourLabel.topAnchor.constraint(equalTo: topAnchor, constant: ViewTrait.defaultVerticalSpacing),
             hourLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
             

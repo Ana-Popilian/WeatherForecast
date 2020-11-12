@@ -48,8 +48,8 @@ final class WeatherForecastView: UIView {
         topView.cityNameLabel.text = weather.city.name
         let temp = Int(weather.weatherList.first!.tempInfo.temp)
         topView.temperatureLabel.text = "\(temp)℃"
-        
         groupWeatherData()
+        
         guard let image = weather.weatherList.first?.weather.first?.icon else {
             return
         }
@@ -57,7 +57,6 @@ final class WeatherForecastView: UIView {
         })
         
         topView.descriptionLabel.text = "\(weather.weatherList.first!.weather.first!.description)"
-        
         topView.humidityLabel.attributedText = convertToAttributedString(title: "Humidity: ", value: "\(weather.weatherList.first!.tempInfo.humidity)%")
         topView.windLabel.attributedText = convertToAttributedString(title: "Wind Speed: ", value: "\(weather.weatherList.first!.wind.speed)m/s")
         topView.pressureLabel.attributedText = convertToAttributedString(title: "Pressure: ", value: "\(weather.weatherList.first!.tempInfo.pressure)hPA")
@@ -69,7 +68,7 @@ final class WeatherForecastView: UIView {
         let titleAtt = NSMutableAttributedString(string: title)
         let valueAtt = NSMutableAttributedString(string: value)
         titleAtt.addAttribute(NSAttributedString.Key.foregroundColor, value: ColorHelper.customBlue, range: NSRange(location: 0, length: title.count - 1))
-
+        
         titleAtt.append(valueAtt)
         return titleAtt
     }
@@ -85,7 +84,6 @@ final class WeatherForecastView: UIView {
         var todayForecast: [Detail] = []
         todayForecast = weatherData.weatherList.filter { (element) -> Bool in
             let weekDayForElement = calendar.component(.weekday, from: element.date)
-            
             return weekDayForElement == weekDay
         }
         todayData = todayForecast
@@ -109,7 +107,6 @@ final class WeatherForecastView: UIView {
     
     func groupWeatherData()  {
         let calendar = Calendar.current
-        
         let groupedForecast = Dictionary(grouping: nextDaysData, by: {
             calendar.ordinality(of: .day, in: .year, for: $0.date)!
         })
@@ -187,12 +184,11 @@ private extension WeatherForecastView {
     
     func setupActivityIndicator() {
         segmentControl.isHidden = true
-      activityIndicator = UIActivityIndicatorView(style: .large)
+        activityIndicator = UIActivityIndicatorView(style: .large)
         activityIndicator.color = ColorHelper.customBlue
-      activityIndicator.hidesWhenStopped = true
-      activityIndicator.startAnimating()
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.startAnimating()
     }
-    
 }
 
 
@@ -215,7 +211,6 @@ extension WeatherForecastView: UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: TodayForecastTableViewCell.identifier, for: indexPath) as! TodayForecastTableViewCell
             let data = todayData[indexPath.row]
             cell.bindCell(data)
-            
             return cell
             
         } else {
@@ -223,7 +218,6 @@ extension WeatherForecastView: UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: NextDaysForecastTableViewCell.identifier, for: indexPath) as! NextDaysForecastTableViewCell
             let data = groupedWeatherData[indexPath.row]
             cell.bindData(by: data)
-            
             return cell
         }
     }

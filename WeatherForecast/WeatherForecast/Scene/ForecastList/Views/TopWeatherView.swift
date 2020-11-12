@@ -15,11 +15,8 @@ final class TopWeatherView: UIView {
     var temperatureLabel: UILabel!
     var descriptionImageView: UIImageView!
     var descriptionLabel: UILabel!
-    var humidityImageView: UIImageView!
     var humidityLabel: UILabel!
-    var windImageView: UIImageView!
     var windLabel: UILabel!
-    var pressureImageView: UIImageView!
     var pressureLabel: UILabel!
     var sunriseLabel: UILabel!
     var sunsetLabel: UILabel!
@@ -110,6 +107,7 @@ private extension TopWeatherView {
         sunsetLabel = UILabel( font: font, textAlignment: .center, textColor: .black)
     }
 }
+
 
 // MARK: - Constraints Zone
 private extension TopWeatherView {
