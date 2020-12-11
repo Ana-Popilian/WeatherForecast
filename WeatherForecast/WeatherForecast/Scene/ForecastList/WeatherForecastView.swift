@@ -7,7 +7,11 @@
 
 import UIKit
 
-final class WeatherForecastView: UIView {
+protocol WeatherForecastViewProtocol where Self: UIView {
+    func updateWeatherData(_ weather: WeatherModel)
+}
+
+final class WeatherForecastView: UIView, WeatherForecastViewProtocol {
     
     private var topView: TopWeatherView!
     private var segmentControl: UISegmentedControl!

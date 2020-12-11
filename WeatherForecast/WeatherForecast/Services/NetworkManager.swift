@@ -15,13 +15,19 @@ enum DataError: Error {
     case serverError
 }
 
-final class NetworkManager: NSObject {
-    
-    typealias result<T> = (Result <T, Error>) -> Void
+protocol NetworkManagerProtocol {
     
     func getData<T: Decodable>(of type: T.Type,
                                from url: URL,
-                               completion: @escaping result<T>) {
+                               completion: @escaping (Result <T, Error>) -> Void)
+}
+
+
+final class NetworkManager: NetworkManagerProtocol {
+
+    func getData<T: Decodable>(of type: T.Type,
+                               from url: URL,
+                               completion: @escaping (Result <T, Error>) -> Void) {
         
         URLSession.shared.dataTask(with: url) {(data, response, error) in
             if let error = error {

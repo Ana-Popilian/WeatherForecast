@@ -9,19 +9,29 @@
 import UIKit
 import CoreLocation
 
-final class WeatherForecastViewController: UIViewController {
+final class WeatherForecastViewController: UIViewController, InjectorViewControllerProtocol {
     private let locationManager = CLLocationManager()
     private var latitude: Double = 0
     private var longitude: Double = 0
+    var error: Error?
     
-    private var mainView: WeatherForecastView!
-    private var weatherData: WeatherModel!
-    private var networkManager = NetworkManager()
+    private let mainView: WeatherForecastViewProtocol
+    var weatherData: WeatherModel!
+    private let networkManager: NetworkManagerProtocol
+    
+    init(injector: InjectorProtocol, mainView: WeatherForecastViewProtocol) {
+        self.networkManager = injector.makeNetworkManager()
+        self.mainView = mainView
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        mainView = WeatherForecastView()
         view = mainView
         
         checkLocationServices()
@@ -96,22 +106,21 @@ extension WeatherForecastViewController {
             switch response {
             
             case .failure(let error):
-                if error is DataError {
-                    print(error)
-                } else {
-                    print(error.localizedDescription)
-                }
-                print(error.localizedDescription)
+                self.error = error
+//                if error is DataError {
+//                    print(error)
+//                } else {
+//                    print(error.localizedDescription)
+//                }
+//                print(error.localizedDescription)
                 
             case .success(let forecastData):
                 
                 self.weatherData = forecastData
-            }
-            DispatchQueue.main.async {
-                guard self.weatherData != nil else {
-                    return
+                
+                DispatchQueue.main.async {
+                    self.mainView.updateWeatherData(self.weatherData)
                 }
-                self.mainView.updateWeatherData(self.weatherData)
             }
         }
     }
