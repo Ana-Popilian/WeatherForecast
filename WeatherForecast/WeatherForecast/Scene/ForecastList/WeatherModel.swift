@@ -12,7 +12,6 @@ struct WeatherModel: Decodable {
     let weatherList: [Detail]
     let city: City
     
-    
     private enum CodingKeys: String, CodingKey {
         case city
         case weatherList = "list"

@@ -9,7 +9,8 @@
 import UIKit
 import CoreLocation
 
-final class WeatherForecastViewController: UIViewController, InjectorViewControllerProtocol {
+final class WeatherForecastViewController: UIViewController {
+    
     private let locationManager = CLLocationManager()
     private var latitude: Double = 0
     private var longitude: Double = 0
@@ -107,12 +108,6 @@ extension WeatherForecastViewController {
             
             case .failure(let error):
                 self.error = error
-//                if error is DataError {
-//                    print(error)
-//                } else {
-//                    print(error.localizedDescription)
-//                }
-//                print(error.localizedDescription)
                 
             case .success(let forecastData):
                 

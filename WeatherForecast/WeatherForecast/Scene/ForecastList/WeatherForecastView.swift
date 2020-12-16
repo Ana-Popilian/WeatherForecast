@@ -68,60 +68,13 @@ final class WeatherForecastView: UIView, WeatherForecastViewProtocol {
         topView.sunsetLabel.attributedText = convertToAttributedString(title: "Sunset: ", value: "\(weather.city.sunset.asString(style: .none))")
     }
     
-    func convertToAttributedString(title: String, value: String) -> NSMutableAttributedString {
+    private func convertToAttributedString(title: String, value: String) -> NSMutableAttributedString {
         let titleAtt = NSMutableAttributedString(string: title)
         let valueAtt = NSMutableAttributedString(string: value)
         titleAtt.addAttribute(NSAttributedString.Key.foregroundColor, value: ColorHelper.customBlue, range: NSRange(location: 0, length: title.count - 1))
         
         titleAtt.append(valueAtt)
         return titleAtt
-    }
-    
-    func filterTodayWeatherData() {
-        let calendar = Calendar.current
-        let weekDay = calendar.component(.weekday, from: Date())
-        
-        guard weatherData != nil else {
-            return
-        }
-        
-        var todayForecast: [Detail] = []
-        todayForecast = weatherData.weatherList.filter { (element) -> Bool in
-            let weekDayForElement = calendar.component(.weekday, from: element.date)
-            return weekDayForElement == weekDay
-        }
-        todayData = todayForecast
-    }
-    
-    func filterNextDaysWeatherData() {
-        let calendar = Calendar.current
-        let weekDay = calendar.component(.weekday, from: Date())
-        
-        guard weatherData != nil else {
-            return
-        }
-        
-        var nextDaysForecast: [Detail] = []
-        nextDaysForecast = weatherData.weatherList.filter { (element) -> Bool in
-            let weekDayForElement = calendar.component(.weekday, from: element.date)
-            return weekDayForElement != weekDay
-        }
-        nextDaysData = nextDaysForecast
-    }
-    
-    func groupWeatherData()  {
-        let calendar = Calendar.current
-        let groupedForecast = Dictionary(grouping: nextDaysData, by: {
-            calendar.ordinality(of: .day, in: .year, for: $0.date)!
-        })
-        
-        let orderedKeys = groupedForecast.keys.sorted { $0 < $1 }
-        
-        var groupArrayOrdered = [[Detail]]()
-        for key in orderedKeys {
-            groupArrayOrdered.append(groupedForecast[key]!)
-            groupedWeatherData = groupArrayOrdered
-        }
     }
 }
 
@@ -193,6 +146,53 @@ private extension WeatherForecastView {
         activityIndicator.hidesWhenStopped = true
         activityIndicator.startAnimating()
     }
+    
+    func filterTodayWeatherData() {
+        let calendar = Calendar.current
+        let weekDay = calendar.component(.weekday, from: Date())
+        
+        guard weatherData != nil else {
+            return
+        }
+        
+        var todayForecast: [Detail] = []
+        todayForecast = weatherData.weatherList.filter { (element) -> Bool in
+            let weekDayForElement = calendar.component(.weekday, from: element.date)
+            return weekDayForElement == weekDay
+        }
+        todayData = todayForecast
+    }
+    
+    func filterNextDaysWeatherData() {
+        let calendar = Calendar.current
+        let weekDay = calendar.component(.weekday, from: Date())
+        
+        guard weatherData != nil else {
+            return
+        }
+        
+        var nextDaysForecast: [Detail] = []
+        nextDaysForecast = weatherData.weatherList.filter { (element) -> Bool in
+            let weekDayForElement = calendar.component(.weekday, from: element.date)
+            return weekDayForElement != weekDay
+        }
+        nextDaysData = nextDaysForecast
+    }
+    
+    func groupWeatherData()  {
+        let calendar = Calendar.current
+        let groupedForecast = Dictionary(grouping: nextDaysData, by: {
+            calendar.ordinality(of: .day, in: .year, for: $0.date)!
+        })
+        
+        let orderedKeys = groupedForecast.keys.sorted { $0 < $1 }
+        
+        var groupArrayOrdered = [[Detail]]()
+        for key in orderedKeys {
+            groupArrayOrdered.append(groupedForecast[key]!)
+            groupedWeatherData = groupArrayOrdered
+        }
+    }
 }
 
 
@@ -218,7 +218,6 @@ extension WeatherForecastView: UITableViewDataSource {
             return cell
             
         } else {
-            
             let cell = tableView.dequeueReusableCell(withIdentifier: NextDaysForecastTableViewCell.identifier, for: indexPath) as! NextDaysForecastTableViewCell
             let data = groupedWeatherData[indexPath.row]
             cell.bindData(by: data)

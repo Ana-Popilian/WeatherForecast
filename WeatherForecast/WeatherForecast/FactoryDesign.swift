@@ -8,14 +8,6 @@
 
 import UIKit
 
-protocol ViewControllerFactory {
-    func makeViewController() -> WeatherForecastViewController
-}
-
-protocol InjectorViewControllerProtocol where Self: UIViewController {
-    
-}
-
 protocol InjectorProtocol {
     func makeNetworkManager() -> NetworkManagerProtocol
 }
@@ -26,14 +18,10 @@ struct AppInjector: InjectorProtocol {
     static let shared = AppInjector()
 }
 
+
+// MARK: - InjectorProtocolExtension
 extension InjectorProtocol {
     func makeNetworkManager() -> NetworkManagerProtocol {
         return NetworkManager()
     }
 }
-
-//extension ViewControllerFactory {
-//    func makeViewController() -> WeatherForecastViewController {
-//        return WeatherForecastViewController(injector: <#T##InjectorProtocol#>, mainView: WeatherForecastView())
-//    }
-//}
