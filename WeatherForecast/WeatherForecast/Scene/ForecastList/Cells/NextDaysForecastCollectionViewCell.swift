@@ -41,8 +41,7 @@ final class NextDaysForecastCollectionViewCell: UICollectionViewCell, Identifiab
         guard let image = hourForecast.weather.first?.icon else {
             return
         }
-        forecastImage.downloadImage(name: image, downloadFinishedHandler: {
-        })
+        forecastImage.downloadImage(name: image)
     }
 }
 
@@ -62,6 +61,7 @@ private extension NextDaysForecastCollectionViewCell {
     func setupHourLabel() {
         let font = UIFont.systemFont(ofSize: 13)
         hourLabel = UILabel(font: font, textAlignment: .natural, textColor: .black)
+        hourLabel.accessibilityIdentifier = "nextDays-hour"
     }
     
     func setupForecastImage() {
@@ -71,6 +71,7 @@ private extension NextDaysForecastCollectionViewCell {
     func setupTemperatureLabel() {
         let font = UIFont.systemFont(ofSize: 13)
         temperatureLabel = UILabel(font: font, textAlignment: .natural, textColor: .black)
+        temperatureLabel.accessibilityIdentifier = "nextDays-temperature"
     }
 }
 

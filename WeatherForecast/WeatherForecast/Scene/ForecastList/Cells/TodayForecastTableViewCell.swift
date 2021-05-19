@@ -23,6 +23,7 @@ final class TodayForecastTableViewCell: UITableViewCell, Identifiable {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         backgroundColor = .white
         setupUI()
+        accessibilityIdentifier = "todayForecast-cell"
     }
     
     required init?(coder: NSCoder) {
@@ -59,15 +60,18 @@ private extension TodayForecastTableViewCell {
     func setupHourLabel() {
         let font = UIFont.systemFont(ofSize: 13)
         hourLabel = UILabel(font: font, textAlignment: .natural, textColor: .black)
+        hourLabel.accessibilityIdentifier = "hour-label"
     }
     
     func setupTemperatureLabel() {
         let font = UIFont.systemFont(ofSize: 13)
         temperatureLabel = UILabel(font: font, textAlignment: .natural, textColor: .black)
+        temperatureLabel.accessibilityIdentifier = "temperature-label"
     }
     
     func setupWeatherImage() {
         weatherImage = UIImageView()
+        weatherImage.accessibilityIdentifier = "cell-image"
     }
 }
 

@@ -62,6 +62,7 @@ private extension TopWeatherView {
     func setupCityName() {
         let font = UIFont.systemFont(ofSize: 20)
         cityNameLabel = UILabel(font: font, textAlignment: .center, textColor: .black)
+        cityNameLabel.accessibilityIdentifier = "city-label"
     }
     
     func setupContainer() {
@@ -71,40 +72,48 @@ private extension TopWeatherView {
     func setupTemperatureLabel() {
         let font = UIFont.systemFont(ofSize: 20)
         temperatureLabel = UILabel(font: font, textAlignment: .left, textColor: .black)
+        temperatureLabel.accessibilityIdentifier = "todayTemperature-label"
     }
     
     func setupDescriptionImageView() {
         descriptionImageView = UIImageView()
+        descriptionImageView.accessibilityIdentifier = "description-image"
     }
     
     func setupDescriptionLabel() {
         let font = UIFont.systemFont(ofSize: 14)
         descriptionLabel = UILabel(font: font, textAlignment: .center, textColor: .black)
+        descriptionLabel.accessibilityIdentifier = "weather-description"
     }
     
     func setupHumidityLabel() {
         let font = UIFont.systemFont(ofSize: 14)
         humidityLabel = UILabel(font: font, textAlignment: .center, textColor: .black)
+        humidityLabel.accessibilityIdentifier = "humidity-label"
     }
     
     func setupWindLabel() {
         let font = UIFont.systemFont(ofSize: 14)
         windLabel = UILabel(font: font, textAlignment: .center, textColor: .black)
+        windLabel.accessibilityIdentifier = "wind-label"
     }
     
     func setupPressureLabel() {
         let font = UIFont.systemFont(ofSize: 14)
         pressureLabel = UILabel(font: font, textAlignment: .center, textColor: .black)
+        pressureLabel.accessibilityIdentifier = "pressure-label"
     }
     
     func setupSunriseLabel() {
         let font = UIFont.systemFont(ofSize: 14)
         sunriseLabel = UILabel( font: font, textAlignment: .center, textColor: .black)
+        sunriseLabel.accessibilityIdentifier = "sunrise-label"
     }
     
     func setupSunsetLabel() {
         let font = UIFont.systemFont(ofSize: 14)
         sunsetLabel = UILabel( font: font, textAlignment: .center, textColor: .black)
+        sunsetLabel.accessibilityIdentifier = "sunset-label"
     }
 }
 

@@ -18,7 +18,7 @@ final class NextDaysForecastTableViewCell: UITableViewCell, Identifiable {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         backgroundColor = .white
-        
+        accessibilityIdentifier = "next-days-table-view-cell"
         setupUI()
     }
     
@@ -49,6 +49,7 @@ private extension NextDaysForecastTableViewCell {
     func setupDateLabel() {
         let font = UIFont.systemFont(ofSize: 14)
         dateLabel = UILabel(font: font, textAlignment: .center, textColor: .black)
+        dateLabel.accessibilityIdentifier = "date-label"
     }
     
     func setupCollectionView() {
@@ -58,6 +59,7 @@ private extension NextDaysForecastTableViewCell {
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.backgroundColor = .white
         collectionView.dataSource = self
+        collectionView.accessibilityIdentifier = "next-days-collection-view"
     }
 }
 

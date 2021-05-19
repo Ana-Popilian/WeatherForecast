@@ -106,6 +106,7 @@ private extension WeatherForecastView {
         
         segmentControl.layer.cornerRadius = 5.0
         segmentControl.backgroundColor = ColorHelper.customBlue
+        segmentControl.accessibilityIdentifier = "segment-control"
     }
     
     @objc func indexChanged(_ sender: UISegmentedControl) {
@@ -137,6 +138,7 @@ private extension WeatherForecastView {
         nextDaysForecastTableView.separatorStyle = .none
         nextDaysForecastTableView.rowHeight = 140
         nextDaysForecastTableView.dataSource = self
+        nextDaysForecastTableView.accessibilityIdentifier = "next-days-table-view"
     }
     
     func setupActivityIndicator() {
