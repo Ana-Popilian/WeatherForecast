@@ -103,7 +103,7 @@ extension ForecastWeatherViewControllerTests: InjectorProtocol {
       }
    }
    
-   class WeatherViewMock: UIView, WeatherForecastViewProtocol {
+   final class WeatherViewMock: UIView, WeatherForecastViewProtocol {
       var expectation: XCTestExpectation?
       var passedWeatherModel: WeatherModel!
       

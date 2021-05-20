@@ -254,12 +254,20 @@
 			path = Protocols;
 			sourceTree = "<group>";
 		};
+		BE301B9D26569365003BAE80 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				BE45C39426554F2800030D04 /* XCTestCaseExtension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		BE45C38B2655470600030D04 /* WeatherForecastUITests */ = {
 			isa = PBXGroup;
 			children = (
+				BE301B9D26569365003BAE80 /* Extensions */,
 				BE45C38C2655470600030D04 /* WeatherForecastUITests.swift */,
 				BE45C38E2655470600030D04 /* Info.plist */,
-				BE45C39426554F2800030D04 /* XCTestCaseExtension.swift */,
 			);
 			path = WeatherForecastUITests;
 			sourceTree = "<group>";

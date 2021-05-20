@@ -18,13 +18,4 @@ extension XCTestCase {
       let expectation = expectation(for: predicate, evaluatedWith: element)
       wait(for: [expectation], timeout: timeout)
    }
-   
-   func getDelayedExpectation(_ seconds: TimeInterval) -> XCTestExpectation {
-      let expectation = expectation(description: "Delay Expectation")
-      
-      DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
-         expectation.fulfill()
-      }
-      return expectation
-   }
 }
